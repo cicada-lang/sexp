@@ -1,4 +1,4 @@
-- `Lexer.lex` -- handle `symbols` -- single char  only
+- `Lexer.lex` -- handle `marks` -- single char only
 - `Lexer.lex` -- handle word
 - `Lexer.lex` -- setup tests
 - `Lexer.lex` -- handle `parentheses` -- single char  only

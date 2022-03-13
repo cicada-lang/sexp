@@ -3,8 +3,8 @@ import { Span } from "../span"
 import { Sexp } from "../sexp"
 
 export interface LexerConfig {
-  symbols: Array<string>
-  quotes: Array<{ prefix: string; symbol: string }>
+  marks: Array<string>
+  quotes: Array<{ mark: string; symbol: string }>
   parentheses: Array<{ start: string; end: string }>
   comments: Array<string>
 }
