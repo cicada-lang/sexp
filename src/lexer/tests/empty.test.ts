@@ -1,6 +1,6 @@
 import { Lexer } from "../../lexer"
+import { assertEquals } from "../../utilities/assertions"
 import { test } from "../../utilities/test"
-import { assertEqual } from "../../utilities/assertions"
 
 const lexer = new Lexer({
   quotes: ["'"],
@@ -13,5 +13,5 @@ const lexer = new Lexer({
 })
 
 test("lex empty text", async () => {
-  assertEqual(lexer.lex(""), [])
+  assertEquals(lexer.lex(""), [])
 })

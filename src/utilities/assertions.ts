@@ -12,7 +12,7 @@ export function assert(value: any): void {
   }
 }
 
-export function assertEqual(x: any, y: any): void {
+export function assertEquals(x: any, y: any): void {
   if (!equal(x, y)) {
     throw new Error(
       [
@@ -24,7 +24,7 @@ export function assertEqual(x: any, y: any): void {
   }
 }
 
-export function assertNotEqual(x: any, y: any): void {
+export function assertNotEquals(x: any, y: any): void {
   if (equal(x, y)) {
     throw new Error(
       [
