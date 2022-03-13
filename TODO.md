@@ -1,4 +1,6 @@
-- extract `infra/test-case`
+- extract `infra/test-case` -- learn API from PHPUnit
+
+  https://phpunit.readthedocs.io/en/9.5
 
 - `Lexer.lex` -- handle `parentheses` -- single char only
 - `Lexer.lex` -- handle `quotes` -- expend `'(1 2 3)` to `(quote (1 2 3))`
