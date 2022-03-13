@@ -1,6 +1,4 @@
 - Atom > Sym Str Num
-- TokenKind -- Parenthesis Quote Comment Symbol String Number
-
 
 - `Lexer.lex` -- handle symbol -- use `marks` -- single char only
 - `Lexer.lex` -- handle number -- use json number
