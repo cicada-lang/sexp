@@ -1,6 +1,8 @@
-- extract `infra/test-case` -- learn API from PHPUnit
+- extract `lexer/test-case` -- with default `lexer`
 
-  https://phpunit.readthedocs.io/en/9.5
+- `tests/all-test-cases.test.ts`
+
+  - use `readdirp`
 
 - `Lexer.lex` -- handle `parentheses` -- single char only
 - `Lexer.lex` -- handle `quotes` -- expend `'(1 2 3)` to `(quote (1 2 3))`
