@@ -1,4 +1,4 @@
-- `Lexer.lex` -- setup tests
+- extract `infra/test-case`
 
 - `Lexer.lex` -- handle `parentheses` -- single char only
 - `Lexer.lex` -- handle `quotes` -- expend `'(1 2 3)` to `(quote (1 2 3))`
