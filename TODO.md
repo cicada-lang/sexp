@@ -1,9 +1,13 @@
-- `Lexer` be able to config `parentheses`
-- `Parser`
+- `Lexer` -- be able to config `parentheses`
+- `Lexer.lex`
+
+
+- `Parser` inject `Lexer`
+- `Parser.parse`
 
 - setup tests
 
 - API for shallow embedding
 
-  - `sexp.match()`
-  - `sexp.toArray()`
+- `Sexp.match()`
+- `Sexp.toArray()`
