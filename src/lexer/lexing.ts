@@ -2,28 +2,24 @@ import { Lexer } from "../lexer"
 import { Span } from "../span"
 import { Token } from "../token"
 
-export class Lexing {
+export class Lexing implements Iterator<Token> {
   index = 0
 
   constructor(public lexer: Lexer, public text: string) {}
 
-  [Symbol.iterator]() {
+  [Symbol.iterator](): Iterator<Token> {
     return this
   }
 
-  next(): { value: Token; done: boolean } {
-    return {
-      done: true,
-      value: new Token({
-        kind: "Symbol",
-        value: "TODO",
-        span: new Span({
-          start: 0,
-          end: 0,
-          row: 0,
-          column: 0,
-        }),
-      }),
+  next(): IteratorResult<Token> {
+    if (this.index >= this.text.length) {
+      return { done: true, value: undefined }
     }
+
+    const span = new Span({ start: 0, end: 0, row: 0, column: 0 })
+
+    const token = new Token({ kind: "Symbol", value: "TODO", span })
+
+    return { done: false, value: token }
   }
 }
