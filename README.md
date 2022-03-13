@@ -2,7 +2,7 @@
 
 > Syntax without representation is tyranny.
 >
-> -- Sussman's mantra.
+> -- Sussman's mantra
 
 An implementation of [S-expression](https://en.wikipedia.org/wiki/S-expression) in JavaScript.
 
