@@ -1,5 +1,3 @@
-- `Cons` instead of `List`
-
 - `Lexing.marks` -- from `parentheses` and `quotes`
 
 - `Lexer.lex` -- handle number -- use json number
@@ -17,5 +15,3 @@
 - `Matcher.match<A>(sexp: Sexp): A` -- composable
 
   - API for shallow embedding -- use `SymbolArray` -- handle cons
-
-- `Sexp.toArray(): SymbolArray`

@@ -1,7 +1,7 @@
 import { Atom } from "../sexp"
 import { Span } from "../span"
 
-export class SymbolAtom extends Atom {
+export class Str extends Atom {
   span?: Span
 
   constructor(
