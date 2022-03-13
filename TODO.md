@@ -1,5 +1,3 @@
-- `List` has `brackets` [] or ()
-
 - `Atom`
 
   - `Sym`
@@ -13,6 +11,6 @@
   - `sexp.match()`
   - `sexp.toArray()`
 
-- `Lexer` be able to config brackets
+- `Lexer` be able to config `parentheses`
 - `Token`
 - `Parser`
