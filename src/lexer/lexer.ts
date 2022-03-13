@@ -2,7 +2,7 @@ import { Token } from "../token"
 import { Lexing } from "./lexing"
 
 export interface LexerConfig {
-  quotes: Array<{ mark: string; symbol: string }>
+  quotes: Array<string>
   parentheses: Array<{ start: string; end: string }>
   comments: Array<string>
 }

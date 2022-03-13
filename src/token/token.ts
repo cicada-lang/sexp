@@ -1,7 +1,8 @@
 import { Span } from "../span"
 
 export type TokenKind =
-  | "Parenthesis"
+  | "ParenthesisStart"
+  | "ParenthesisEnd"
   | "Quote"
   | "Comment"
   | "Symbol"
