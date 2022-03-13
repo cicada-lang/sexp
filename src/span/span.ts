@@ -1,13 +1,18 @@
 export class Span {
-  hi: number
-  lo: number
+  start: number
+  end: number
   row: number
-  col: number
+  column: number
 
-  constructor(opts: { hi: number; lo: number; row: number; col: number }) {
-    this.hi = opts.hi
-    this.lo = opts.lo
+  constructor(opts: {
+    start: number
+    end: number
+    row: number
+    column: number
+  }) {
+    this.start = opts.start
+    this.end = opts.end
     this.row = opts.row
-    this.col = opts.col
+    this.column = opts.column
   }
 }
