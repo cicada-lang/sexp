@@ -1,5 +1,3 @@
-- extract `lexer/test-case` -- with default `lexer`
-
 - `tests/all-test-cases.test.ts`
 
   - use `readdirp`
