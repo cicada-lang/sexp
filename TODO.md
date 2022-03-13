@@ -1,9 +1,3 @@
-- `Atom`
-
-  - `Sym`
-  - `Str`
-  - `Num`
-
 - setup tests
 
 - API for shallow embedding
