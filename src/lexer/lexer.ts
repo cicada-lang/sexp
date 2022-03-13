@@ -1,5 +1,5 @@
-import { Span } from "../span"
 import { Token } from "../token"
+import { Lexing } from "./lexing"
 
 export interface LexerConfig {
   quotes: Array<{ mark: string; symbol: string }>
@@ -8,39 +8,20 @@ export interface LexerConfig {
 }
 
 export class Lexer {
-  constructor(public config: LexerConfig) {}
+  marks: Array<string>
+
+  constructor(public config: LexerConfig) {
+    this.marks = createMarks(config)
+  }
 
   lex(text: string): Array<Token> {
-    return Array.from(new Lexing(text, this.config))
+    return Array.from(new Lexing(this, text))
   }
 }
 
-class Lexing {
-  index = 0
-
-  constructor(public text: string, public config: LexerConfig) {}
-
-  get marks(): Array<string> {
-    throw new Error("TODO")
-  }
-
-  [Symbol.iterator]() {
-    return this
-  }
-
-  next(): { value: Token; done: boolean } {
-    return {
-      done: true,
-      value: new Token({
-        kind: "Symbol",
-        value: "TODO",
-        span: new Span({
-          start: 0,
-          end: 0,
-          row: 0,
-          column: 0,
-        }),
-      }),
-    }
-  }
+function createMarks(config: LexerConfig): Array<string> {
+  return [
+    ...config.quotes.map(({ mark }) => mark),
+    ...config.parentheses.flatMap(({ start, end }) => [start, end]),
+  ]
 }
