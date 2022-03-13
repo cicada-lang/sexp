@@ -1,6 +1,7 @@
-- Atom > Sym Str Num
+- `Cons` instead of `List`
 
-- `Lexer.lex` -- handle symbol -- use `marks` -- single char only
+- `Lexing.marks` -- from `parentheses` and `quotes`
+
 - `Lexer.lex` -- handle number -- use json number
 - `Lexer.lex` -- handle string -- use json string
 
@@ -13,8 +14,8 @@
 
 - `Parser.parseTokens`
 
-- API for shallow embedding
-
 - `Matcher.match<A>(sexp: Sexp): A` -- composable
+
+  - API for shallow embedding -- use `SymbolArray` -- handle cons
 
 - `Sexp.toArray(): SymbolArray`

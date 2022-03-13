@@ -1,9 +1,7 @@
-import { Token } from "../token"
 import { Span } from "../span"
-import { Sexp } from "../sexp"
+import { Token } from "../token"
 
 export interface LexerConfig {
-  marks: Array<string>
   quotes: Array<{ mark: string; symbol: string }>
   parentheses: Array<{ start: string; end: string }>
   comments: Array<string>
@@ -21,6 +19,10 @@ class Lexing {
   index = 0
 
   constructor(public text: string, public config: LexerConfig) {}
+
+  get marks(): Array<string> {
+    throw new Error("TODO")
+  }
 
   [Symbol.iterator]() {
     return this

@@ -1,7 +1,6 @@
 import { Lexer } from "../lexer"
-import { Token } from "../token"
-import { Span } from "../span"
 import { Sexp } from "../sexp"
+import { Token } from "../token"
 
 export class Parser {
   lexer: Lexer
