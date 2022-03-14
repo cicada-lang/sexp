@@ -1,5 +1,5 @@
 - `PerserConfig` -- `quotes` and `parentheses` should be `Record` instead of `Array`
-- `Parsing` has `config: PerserConfig`
+
 - `Parsing.parse` -- `Cons`
 - `Parsing.parse` -- `Null`
 - `Parsing.parse` -- handle `quotes` -- expend `'(1 2 3)` to `(quote (1 2 3))`
