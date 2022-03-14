@@ -13,7 +13,7 @@ export class Position {
     return new Position({ index: 0, column: 0, row: 0 })
   }
 
-  forwardChar(char: string): void {
+  step(char: string): void {
     if (char.length !== 1) {
       throw new Error(`I Expect the char to be length of one: ${char}`)
     }

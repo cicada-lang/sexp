@@ -35,7 +35,7 @@ export class Lexing implements Iterator<Token> {
     if (this.char === undefined) return
 
     while (count-- > 0) {
-      this.position.forwardChar(this.char)
+      this.position.step(this.char)
     }
   }
 
