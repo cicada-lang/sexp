@@ -25,9 +25,9 @@ async function runTestCase(path: string): Promise<void> {
 
   for (const name of names) {
     if (name.startsWith("test")) {
-      console.log({ path, message: name })
-      const action = testCase[name]
-      action.bind(testCase)
+      console.log({ path, name })
+      const action = testCase[name].bind(testCase)
+      action()
     }
   }
 }
