@@ -4,7 +4,11 @@ import { Token } from "../../token"
 
 export default class extends TestCase {
   lexer = new Lexer({
-    quotes: ["'"],
+    quotes: [
+      { mark: "'", symbol: "quote" },
+      { mark: ",", symbol: "unquote" },
+      { mark: "`", symbol: "quasiquote" },
+    ],
     parentheses: [
       { start: "(", end: ")" },
       { start: "[", end: "]" },
