@@ -48,7 +48,6 @@ export class Lexing implements Iterator<Token> {
     for (const handler of this.handlers) {
       if (handler.canHandle(char)) {
         const start = this.position
-        this.forward()
         const value = handler.handle(char)
         if (handler.kind === undefined) return undefined
         const end = this.position
@@ -70,11 +69,6 @@ abstract class CharHandler {
   abstract canHandle(char: string): boolean
   abstract handle(char: string): string
 
-  tryToHandle(char: string): string | undefined {
-    if (!this.canHandle(char)) return undefined
-    return this.handle(char)
-  }
-
   get lexer(): Lexer {
     return this.lexing.lexer
   }
@@ -89,6 +83,7 @@ class SpaceHandler extends CharHandler {
 
   handle(char: string): string {
     let value = char
+    this.lexing.forward()
     while (this.lexing.char !== undefined && this.lexing.char.trim() === "") {
       value += this.lexing.char
       this.lexing.forward()
@@ -108,6 +103,7 @@ class ParenthesisStartHandler extends CharHandler {
   }
 
   handle(char: string): string {
+    this.lexing.forward()
     return char
   }
 }
@@ -120,6 +116,7 @@ class ParenthesisEndHandler extends CharHandler {
   }
 
   handle(char: string): string {
+    this.lexing.forward()
     return char
   }
 }
@@ -132,6 +129,7 @@ class QuoteHandler extends CharHandler {
   }
 
   handle(char: string): string {
+    this.lexing.forward()
     return char
   }
 }
@@ -146,7 +144,7 @@ class CommentHandler extends CharHandler {
 
   handle(char: string): string {
     let value = char
-
+    this.lexing.forward()
     while (this.lexing.char !== undefined && this.lexing.char !== "\n") {
       value += this.lexing.char
       this.lexing.forward()
@@ -164,16 +162,15 @@ class StringHandler extends CharHandler {
   }
 
   handle(char: string): string {
-    const text = char + this.lexing.rest
+    const text = this.lexing.rest
     let index = 2 // NOTE over first `"` and the folloing char.
-
     while (index <= text.length) {
       const head = text.slice(0, index)
       const str = this.tryToParseString(head)
       if (str === undefined) {
         index++
       } else {
-        this.lexing.forward(index - 1)
+        this.lexing.forward(index)
         return head
       }
     }
@@ -199,13 +196,13 @@ class NumberHandler extends CharHandler {
   }
 
   handle(char: string): string {
-    const text = char + this.lexing.rest
+    const text = this.lexing.rest
     const index = this.lastSuccessAt(text)
     if (index === undefined) {
       throw new Error("Internal error")
     }
 
-    this.lexing.forward(index - 1)
+    this.lexing.forward(index)
     return text.slice(0, index)
   }
 
@@ -249,7 +246,7 @@ class SymbolHandler extends CharHandler {
 
   handle(char: string): string {
     let value = char
-
+    this.lexing.forward()
     while (
       this.lexing.char !== undefined &&
       this.lexing.char.trim() !== "" &&
