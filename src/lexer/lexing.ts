@@ -1,5 +1,6 @@
 import { Lexer } from "../lexer"
 import { Position, Span, Token, TokenKind } from "../token"
+import { InternalError } from "../errors"
 
 export class Lexing implements Iterator<Token> {
   position = Position.init()
@@ -203,7 +204,7 @@ class NumberHandler extends CharHandler {
     const text = this.lexing.rest
     const index = this.lastSuccessAt(text)
     if (index === undefined) {
-      throw new Error("Internal error")
+      throw new InternalError(`Expect to find lastSuccessAt in text: ${text}`)
     }
 
     this.lexing.forward(index)
