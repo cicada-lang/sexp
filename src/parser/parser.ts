@@ -1,7 +1,7 @@
 import { Lexer } from "../lexer"
+import { ParserConfig } from "../parser"
 import { Sexp } from "../sexp"
 import { Parsing } from "./parsing"
-import { ParserConfig } from "../parser"
 
 export class Parser {
   lexer: Lexer

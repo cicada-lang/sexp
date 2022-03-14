@@ -1,7 +1,7 @@
-import { Num, Sexp, Sym, Str, Null, Cons } from "../sexp"
-import { Token } from "../token"
-import { Parser } from "../parser"
 import { InternalError } from "../errors"
+import { Parser } from "../parser"
+import { Cons, Null, Num, Sexp, Str, Sym } from "../sexp"
+import { Token } from "../token"
 
 export class Parsing {
   index = 0
@@ -44,10 +44,20 @@ export class Parsing {
         return new Str(value, this.token.span)
       }
 
-      case "Quote":
-      case "ParenthesisStart":
-      case "ParenthesisEnd":
+      case "ParenthesisStart": {
+        Cons
         throw new Error("TODO")
+      }
+
+      case "ParenthesisEnd": {
+        Cons
+        throw new Error("TODO")
+      }
+
+      case "Quote": {
+        Cons
+        throw new Error("TODO")
+      }
     }
   }
 }
