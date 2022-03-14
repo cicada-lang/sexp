@@ -60,6 +60,16 @@ export default class extends TestCase {
       { kind: "ParenthesisEnd", value: "]" },
       { kind: "ParenthesisEnd", value: ")" },
     ])
+
+    this.assertLex("(head . tail)", [
+      { kind: "ParenthesisStart", value: "(" },
+      { kind: "Symbol", value: "head" },
+      { kind: "Symbol", value: "." },
+      { kind: "Symbol", value: "tail" },
+      { kind: "ParenthesisEnd", value: ")" },
+    ])
+
+    this.assertLex("abc", [{ kind: "Symbol", value: "abc" }])
   }
 
   ["test comments"]() {
