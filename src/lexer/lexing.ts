@@ -10,7 +10,7 @@ export class Lexing implements Iterator<Token> {
     new ParenthesisStartHandler(this),
     new ParenthesisEndHandler(this),
     new CommentHandler(this),
-    new SymbolHandler(this),    
+    new SymbolHandler(this),
   ]
 
   constructor(public lexer: Lexer, public text: string) {}
