@@ -1,4 +1,4 @@
-- `Lexer.lex` -- handle `parentheses` & `quotes`
+- [refactor] `Lexer.lex` -- handle `parentheses` & `quotes`
 
 - `Lexer.lex` -- handle number -- use json number
 - `Lexer.lex` -- handle double quoted string -- use json string
