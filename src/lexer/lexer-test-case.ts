@@ -2,7 +2,7 @@ import { TestCase } from "../infra/test-case"
 import { Lexer } from "../lexer"
 import { Token } from "../token"
 
-export default class extends TestCase {
+export class LexerTestCase extends TestCase {
   lexer = new Lexer({
     quotes: [
       { mark: "'", symbol: "quote" },

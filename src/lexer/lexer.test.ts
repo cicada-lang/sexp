@@ -1,6 +1,6 @@
-import TestCase from "./test-case"
+import { LexerTestCase } from "./lexer-test-case"
 
-export default class extends TestCase {
+export default class extends LexerTestCase {
   ["test blank"]() {
     this.assertLex("", [])
     this.assertLex("\n", [])
