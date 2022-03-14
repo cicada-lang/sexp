@@ -1,20 +1,12 @@
 import { Token } from "../token"
+import { ParserConfig, ParserOptions } from "../parser"
 import { Lexing } from "./lexing"
 
-export interface LexerConfig {
-  quotes: Array<{ mark: string; symbol: string }>
-  parentheses: Array<{ start: string; end: string }>
-  comments: Array<string>
-}
-
 export class Lexer {
-  marks: Array<string>
+  config: ParserConfig
 
-  constructor(public config: LexerConfig) {
-    this.marks = [
-      ...config.quotes.map(({ mark }) => mark),
-      ...config.parentheses.flatMap(({ start, end }) => [start, end]),
-    ]
+  constructor(public options: ParserOptions) {
+    this.config = new ParserConfig(options)
   }
 
   lex(text: string): Array<Token> {

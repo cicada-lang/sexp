@@ -259,7 +259,7 @@ class SymbolHandler extends CharHandler {
     while (
       this.lexing.char !== undefined &&
       this.lexing.char.trim() !== "" &&
-      !this.lexer.marks.includes(this.lexing.char)
+      !this.lexer.config.marks.includes(this.lexing.char)
     ) {
       value += this.lexing.char
       this.lexing.forward(1)

@@ -1,4 +1,3 @@
-- extract `PerserConfig`
 - `PerserConfig` -- `quotes` and `parentheses` should be `Record` instead of `Array`
 - `Parsing` has `config: PerserConfig`
 - `Parsing.parse` -- `Cons`
