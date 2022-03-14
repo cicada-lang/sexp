@@ -12,7 +12,7 @@ export function formatDate(t: Date | number): string {
 
 export function formatTime(
   t: Date | number,
-  opts?: { withMilliseconds?: boolean }
+  options?: { withMilliseconds?: boolean }
 ): string {
   if (typeof t === "number") t = new Date(t)
 
@@ -22,7 +22,7 @@ export function formatTime(
 
   const mi = leftPad((t.getTime() % 1000).toString(), 3, "0")
 
-  if (opts?.withMilliseconds) {
+  if (options?.withMilliseconds) {
     return `${hh}:${mm}:${ss}.${mi}`
   } else {
     return `${hh}:${mm}:${ss}`
@@ -31,12 +31,12 @@ export function formatTime(
 
 export function formatDateTime(
   t: Date | number,
-  opts?: { withMilliseconds?: boolean }
+  options?: { withMilliseconds?: boolean }
 ): string {
   if (typeof t === "number") t = new Date(t)
 
   const date = formatDate(t)
-  const time = formatTime(t, opts)
+  const time = formatTime(t, options)
 
   return `${date} ${time}`
 }

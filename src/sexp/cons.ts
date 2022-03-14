@@ -7,16 +7,16 @@ export class Cons extends Sexp {
   parentheses: { start: string; end: string }
   span?: Span
 
-  constructor(opts: {
+  constructor(options: {
     head: Sexp
     tail: Sexp
     parentheses: { start: string; end: string }
     span?: Span
   }) {
     super()
-    this.head = opts.head
-    this.tail = opts.tail
-    this.parentheses = opts.parentheses
-    this.span = opts.span
+    this.head = options.head
+    this.tail = options.tail
+    this.parentheses = options.parentheses
+    this.span = options.span
   }
 }

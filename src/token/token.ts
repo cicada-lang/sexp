@@ -14,9 +14,9 @@ export class Token {
   value: string
   span: Span
 
-  constructor(opts: { kind: TokenKind; value: string; span: Span }) {
-    this.kind = opts.kind
-    this.value = opts.value
-    this.span = opts.span
+  constructor(options: { kind: TokenKind; value: string; span: Span }) {
+    this.kind = options.kind
+    this.value = options.value
+    this.span = options.span
   }
 }

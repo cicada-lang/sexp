@@ -3,10 +3,10 @@ export class Position {
   column: number
   row: number
 
-  constructor(opts: { index: number; column: number; row: number }) {
-    this.index = opts.index
-    this.column = opts.column
-    this.row = opts.row
+  constructor(options: { index: number; column: number; row: number }) {
+    this.index = options.index
+    this.column = options.column
+    this.row = options.row
   }
 
   static init(): Position {

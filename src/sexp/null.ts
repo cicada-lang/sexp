@@ -4,7 +4,7 @@ import { Span } from "../token"
 export class Null extends Atom {
   span?: Span
 
-  constructor(opts: { span?: Span }) {
+  constructor(options: { span?: Span }) {
     super()
   }
 }

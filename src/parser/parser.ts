@@ -5,8 +5,8 @@ import { Parsing } from "./parsing"
 export class Parser {
   lexer: Lexer
 
-  constructor(opts: { lexer: Lexer }) {
-    this.lexer = opts.lexer
+  constructor(options: { lexer: Lexer }) {
+    this.lexer = options.lexer
   }
 
   parse(text: string): Sexp {
