@@ -8,7 +8,14 @@ export interface LexerConfig {
 }
 
 export class Lexer {
-  constructor(public config: LexerConfig) {}
+  marks: Array<string>
+
+  constructor(public config: LexerConfig) {
+    this.marks = [
+      ...config.quotes.map(({ mark }) => mark),
+      ...config.parentheses.flatMap(({ start, end }) => [start, end]),
+    ]
+  }
 
   lex(text: string): Array<Token> {
     return Array.from(new Lexing(this, text))

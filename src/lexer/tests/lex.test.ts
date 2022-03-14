@@ -16,7 +16,7 @@ export default class extends TestCase {
       { kind: "Symbol", value: "c" },
     ])
 
-    // this.assertLex("abc", [{ kind: "Symbol", value: "abc" }])
+    this.assertLex("abc", [{ kind: "Symbol", value: "abc" }])
   }
 
   ["test quotes"]() {
@@ -42,10 +42,23 @@ export default class extends TestCase {
       { kind: "ParenthesisEnd", value: "]" },
     ])
 
-    this.assertLex("([{ }])", [
+    this.assertLex("(a)(b)(c)", [
+      { kind: "ParenthesisStart", value: "(" },
+      { kind: "Symbol", value: "a" },
+      { kind: "ParenthesisEnd", value: ")" },
+      { kind: "ParenthesisStart", value: "(" },
+      { kind: "Symbol", value: "b" },
+      { kind: "ParenthesisEnd", value: ")" },
+      { kind: "ParenthesisStart", value: "(" },
+      { kind: "Symbol", value: "c" },
+      { kind: "ParenthesisEnd", value: ")" },
+    ])
+
+    this.assertLex("([{x}])", [
       { kind: "ParenthesisStart", value: "(" },
       { kind: "ParenthesisStart", value: "[" },
       { kind: "ParenthesisStart", value: "{" },
+      { kind: "Symbol", value: "x" },
       { kind: "ParenthesisEnd", value: "}" },
       { kind: "ParenthesisEnd", value: "]" },
       { kind: "ParenthesisEnd", value: ")" },

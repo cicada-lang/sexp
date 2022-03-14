@@ -10,69 +10,77 @@ export class Lexing implements Iterator<Token> {
     return this
   }
 
-  nextChar(): string | undefined {
-    while (true) {
-      const char = this.text[this.position.index++]
-      if (char === undefined) return undefined
-      if (char.trim() !== "") return char
-    }
+  get char(): string | undefined {
+    return this.text[this.position.index]
   }
 
-  handlers: Array<CharHandler> = [
-    new QuoteHandler(this),
-    new ParenthesisStartHandler(this),
-    new ParenthesisEndHandler(this),
-    new SymbolHandler(this),
-  ]
+  forward(): void {
+    this.position.index++
+  }
 
   next(): IteratorResult<Token> {
-    const start = this.position
-
-    const char = this.nextChar()
-    if (char === undefined) {
-      return { done: true, value: undefined }
-    }
-
-    while (true) {
-      const result = this.handleChar(start, char)
+    while (this.char !== undefined) {
+      const result = this.handleChar(this.char)
       if (result !== undefined) return result
     }
+
+    return { done: true, value: undefined }
   }
 
-  private handleChar(
-    start: Position,
-    char: string
-  ): IteratorResult<Token> | undefined {
+  private handleChar(char: string): IteratorResult<Token> | undefined {
     for (const handler of this.handlers) {
       if (handler.canHandle(char)) {
-        const end = this.position
-
+        const start = this.position
+        this.forward()
         const value = handler.handle(char)
-
-        if (value === undefined) return undefined
-
+        if (handler.kind === undefined) return undefined
+        const end = this.position
         const span = new Span(start, end)
-
         const token = new Token({ kind: handler.kind, value, span })
-
         return { done: false, value: token }
       }
     }
 
     throw new Error(`Can not handle char: ${char}`)
   }
+
+  handlers: Array<CharHandler> = [
+    new SpaceHandler(this),
+    new QuoteHandler(this),
+    new ParenthesisStartHandler(this),
+    new ParenthesisEndHandler(this),
+    new SymbolHandler(this),
+  ]
 }
 
 abstract class CharHandler {
   constructor(public lexing: Lexing) {}
 
-  abstract kind: TokenKind
+  abstract kind: TokenKind | undefined
 
   abstract canHandle(char: string): boolean
   abstract handle(char: string): string
 
   get lexer(): Lexer {
     return this.lexing.lexer
+  }
+}
+
+class SpaceHandler extends CharHandler {
+  kind = undefined
+
+  canHandle(char: string): boolean {
+    return char.trim() === ""
+  }
+
+  handle(char: string): string {
+    let space = char
+    while (this.lexing.char !== undefined && this.lexing.char.trim() === "") {
+      space += this.lexing.char
+      this.lexing.forward()
+    }
+
+    return space
   }
 }
 
@@ -114,8 +122,6 @@ class QuoteHandler extends CharHandler {
   }
 }
 
-// class SpaceHandler extends CharHandler {}
-
 class SymbolHandler extends CharHandler {
   kind = "Symbol" as const
 
@@ -126,11 +132,14 @@ class SymbolHandler extends CharHandler {
   handle(char: string): string {
     let symbol = char
 
-    // while (true) {
-    //   const nextChar = this.lexing.nextChar()
-    //   if (nextChar === undefined) return symbol
-    //   symbol += nextChar
-    // }
+    while (
+      this.lexing.char !== undefined &&
+      this.lexing.char.trim() !== "" &&
+      !this.lexer.marks.includes(this.lexing.char)
+    ) {
+      symbol += this.lexing.char
+      this.lexing.forward()
+    }
 
     return symbol
   }
