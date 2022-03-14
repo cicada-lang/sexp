@@ -1,5 +1,5 @@
 import { Sexp } from "../sexp"
-import { Span } from "../span"
+import { Span } from "../token"
 
 export class Cons extends Sexp {
   head: Sexp

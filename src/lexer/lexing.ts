@@ -1,9 +1,8 @@
 import { Lexer } from "../lexer"
-import { Span, Position } from "../span"
-import { Token } from "../token"
+import { Position, Span, Token } from "../token"
 
 export class Lexing implements Iterator<Token> {
-  index = 0
+  position = Position.init()
 
   constructor(public lexer: Lexer, public text: string) {}
 
@@ -13,29 +12,21 @@ export class Lexing implements Iterator<Token> {
 
   private nextChar(): string | undefined {
     while (true) {
-      const char = this.text[this.index++]
+      const char = this.text[this.position.index++]
       if (char === undefined) return undefined
       if (char.trim() !== "") return char
     }
   }
 
-  private position(): Position {
-    return {
-      index: this.index,
-      row: 0,
-      column: 0,
-    }
-  }
-
   next(): IteratorResult<Token> {
-    const start = this.position()
+    const start = this.position
 
     const char = this.nextChar()
     if (char === undefined) {
       return { done: true, value: undefined }
     }
 
-    const end = this.position()
+    const end = this.position
 
     const span = new Span(start, end)
 

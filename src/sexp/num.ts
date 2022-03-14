@@ -1,5 +1,5 @@
 import { Atom } from "../sexp"
-import { Span } from "../span"
+import { Span } from "../token"
 
 export class Num extends Atom {
   span?: Span
