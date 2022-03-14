@@ -1,11 +1,12 @@
 import { Num, Sexp, Sym, Str, Null, Cons } from "../sexp"
 import { Token } from "../token"
+import { Parser } from "../parser"
 import { InternalError } from "../errors"
 
 export class Parsing {
   index = 0
 
-  constructor(public tokens: Array<Token>) {}
+  constructor(public parser: Parser, public tokens: Array<Token>) {}
 
   get token(): Token {
     return this.tokens[this.index]
@@ -14,6 +15,10 @@ export class Parsing {
   parse(): Sexp {
     switch (this.token.kind) {
       case "Symbol": {
+        if (this.parser.config.isNull(this.token.value)) {
+          return new Null(this.token.span)
+        }
+
         return new Sym(this.token.value, this.token.span)
       }
 
@@ -42,7 +47,6 @@ export class Parsing {
       case "Quote":
       case "ParenthesisStart":
       case "ParenthesisEnd":
-      default:
         throw new Error("TODO")
     }
   }

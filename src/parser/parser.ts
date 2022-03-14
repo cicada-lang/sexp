@@ -14,7 +14,7 @@ export class Parser {
 
   parse(text: string): Sexp {
     const tokens = this.lexer.lex(text)
-    const parsing = new Parsing(tokens)
+    const parsing = new Parsing(this, tokens)
     return parsing.parse()
   }
 }

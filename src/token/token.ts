@@ -4,7 +4,6 @@ export type TokenKind =
   | "ParenthesisStart"
   | "ParenthesisEnd"
   | "Quote"
-  | "Comment"
   | "Symbol"
   | "String"
   | "Number"

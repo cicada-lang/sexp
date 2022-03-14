@@ -73,19 +73,13 @@ export default class extends LexerTestCase {
   }
 
   ["test comments"]() {
-    this.assertLex("; abc", [{ kind: "Comment", value: "; abc" }])
-    this.assertLex("; abc\n", [{ kind: "Comment", value: "; abc" }])
-    this.assertLex("; abc\nabc", [
-      { kind: "Comment", value: "; abc" },
-      { kind: "Symbol", value: "abc" },
-    ])
+    this.assertLex("; abc", [])
+    this.assertLex("; abc\n", [])
+    this.assertLex("; abc\nabc", [{ kind: "Symbol", value: "abc" }])
 
-    this.assertLex("// abc", [{ kind: "Comment", value: "// abc" }])
-    this.assertLex("// abc\n", [{ kind: "Comment", value: "// abc" }])
-    this.assertLex("// abc\nabc", [
-      { kind: "Comment", value: "// abc" },
-      { kind: "Symbol", value: "abc" },
-    ])
+    this.assertLex("// abc", [])
+    this.assertLex("// abc\n", [])
+    this.assertLex("// abc\nabc", [{ kind: "Symbol", value: "abc" }])
   }
 
   ["test string"]() {

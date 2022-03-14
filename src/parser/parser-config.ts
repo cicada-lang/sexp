@@ -24,4 +24,8 @@ export class ParserConfig {
       ...options.parentheses.flatMap(({ start, end }) => [start, end]),
     ]
   }
+
+  isNull(value: string): boolean {
+    return this.nulls.some((x) => x === value)
+  }
 }

@@ -140,7 +140,7 @@ class QuoteHandler extends CharHandler {
 }
 
 class CommentHandler extends CharHandler {
-  kind = "Comment" as const
+  kind = undefined
 
   canHandle(char: string): boolean {
     const text = char + this.lexing.rest
