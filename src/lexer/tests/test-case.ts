@@ -22,6 +22,8 @@ export default class extends TestCase {
       .lex(text)
       .map(({ kind, value }) => ({ kind, value }))
 
+    console.dir(this.lexer.lex(text), { depth: null })
+
     this.assertEquals(results, tokens)
   }
 }

@@ -1,6 +1,6 @@
 import { Lexer } from "../lexer"
 import { Position, Span, Token, TokenKind } from "../token"
-CharHandler
+
 export class Lexing implements Iterator<Token> {
   position = Position.init()
 
@@ -31,8 +31,12 @@ export class Lexing implements Iterator<Token> {
     return this.text.slice(this.position.index)
   }
 
-  forward(count: number = 1): void {
-    this.position.index += count
+  forward(count: number): void {
+    if (this.char === undefined) return
+
+    while (count-- > 0) {
+      this.position.forwardChar(this.char)
+    }
   }
 
   next(): IteratorResult<Token> {
@@ -47,10 +51,10 @@ export class Lexing implements Iterator<Token> {
   private handleChar(char: string): IteratorResult<Token> | undefined {
     for (const handler of this.handlers) {
       if (handler.canHandle(char)) {
-        const start = this.position
+        const start = new Position(this.position)
         const value = handler.handle(char)
         if (handler.kind === undefined) return undefined
-        const end = this.position
+        const end = new Position(this.position)
         const span = new Span(start, end)
         const token = new Token({ kind: handler.kind, value, span })
         return { done: false, value: token }
@@ -83,10 +87,10 @@ class SpaceHandler extends CharHandler {
 
   handle(char: string): string {
     let value = char
-    this.lexing.forward()
+    this.lexing.forward(1)
     while (this.lexing.char !== undefined && this.lexing.char.trim() === "") {
       value += this.lexing.char
-      this.lexing.forward()
+      this.lexing.forward(1)
     }
 
     return value
@@ -103,7 +107,7 @@ class ParenthesisStartHandler extends CharHandler {
   }
 
   handle(char: string): string {
-    this.lexing.forward()
+    this.lexing.forward(1)
     return char
   }
 }
@@ -116,7 +120,7 @@ class ParenthesisEndHandler extends CharHandler {
   }
 
   handle(char: string): string {
-    this.lexing.forward()
+    this.lexing.forward(1)
     return char
   }
 }
@@ -129,7 +133,7 @@ class QuoteHandler extends CharHandler {
   }
 
   handle(char: string): string {
-    this.lexing.forward()
+    this.lexing.forward(1)
     return char
   }
 }
@@ -144,10 +148,10 @@ class CommentHandler extends CharHandler {
 
   handle(char: string): string {
     let value = char
-    this.lexing.forward()
+    this.lexing.forward(1)
     while (this.lexing.char !== undefined && this.lexing.char !== "\n") {
       value += this.lexing.char
-      this.lexing.forward()
+      this.lexing.forward(1)
     }
 
     return value
@@ -246,14 +250,14 @@ class SymbolHandler extends CharHandler {
 
   handle(char: string): string {
     let value = char
-    this.lexing.forward()
+    this.lexing.forward(1)
     while (
       this.lexing.char !== undefined &&
       this.lexing.char.trim() !== "" &&
       !this.lexer.marks.includes(this.lexing.char)
     ) {
       value += this.lexing.char
-      this.lexing.forward()
+      this.lexing.forward(1)
     }
 
     return value

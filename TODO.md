@@ -1,5 +1,3 @@
-- `Lexer.lex` -- handle `row` and `column` in `Position`
-
 - `Parser.parseTokens`
 - `Parser.parse` -- handle `quotes` -- expend `'(1 2 3)` to `(quote (1 2 3))`
 - `Matcher.match<A>(sexp: Sexp): A` -- composable
