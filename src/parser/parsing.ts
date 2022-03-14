@@ -82,6 +82,7 @@ export class Parsing {
 
   parseMany(tokens: Array<Token>): {
     sexps: Array<Sexp>
+    ending?: Sexp,
     remain: Array<Token>
   } {
     throw new Error("TODO")
