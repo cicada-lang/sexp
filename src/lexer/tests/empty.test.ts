@@ -1,4 +1,3 @@
-import { Lexer } from "../../lexer"
 import TestCase from "./test-case"
 
 export default class extends TestCase {

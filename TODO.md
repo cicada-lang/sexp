@@ -1,7 +1,3 @@
-- `tests/all-test-cases.test.ts`
-
-  - use `readdirp`
-
 - `Lexer.lex` -- handle `parentheses` -- single char only
 - `Lexer.lex` -- handle `quotes` -- expend `'(1 2 3)` to `(quote (1 2 3))`
 
