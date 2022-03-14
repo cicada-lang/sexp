@@ -1,4 +1,6 @@
-- `Parsing.parse`
+- `Parsing.parse` -- Cons
+- `Parsing.parse` -- Null
+- `Parsing` has `config`
 - `Parsing.parse` -- handle `quotes` -- expend `'(1 2 3)` to `(quote (1 2 3))`
 
 - `Matcher.match<A>(sexp: Sexp): A` -- composable
