@@ -1,8 +1,15 @@
 import { Lexer } from "../lexer"
-import { Position, Span, Token } from "../token"
+import { Position, Span, Token, TokenKind } from "../token"
 
 export class Lexing implements Iterator<Token> {
   position = Position.init()
+
+  handlers: Array<CharHandler> = [
+    new QuoteHandler(this),
+    new ParenthesisStartHandler(this),
+    new ParenthesisEndHandler(this),
+    new SymbolHandler(this),
+  ]
 
   constructor(public lexer: Lexer, public text: string) {}
 
@@ -26,60 +33,83 @@ export class Lexing implements Iterator<Token> {
       return { done: true, value: undefined }
     }
 
-    if (this.isQuote(char)) return this.nextQuote(char, start)
-    if (this.isParenthesisStart(char))
-      return this.nextParenthesisStart(char, start)
-    if (this.isParenthesisEnd(char)) return this.nextParenthesisEnd(char, start)
-    else return this.nextSymbol(char, start)
+    for (const handler of this.handlers) {
+      if (handler.canHandle(char)) {
+        const end = this.position
+
+        const token = new Token({
+          kind: handler.kind,
+          value: handler.handle(char),
+          span: new Span(start, end),
+        })
+
+        return { done: false, value: token }
+      }
+    }
+
+    throw new Error(`Can not handle char: ${char}`)
+  }
+}
+
+abstract class CharHandler {
+  constructor(public lexing: Lexing) {}
+
+  abstract kind: TokenKind
+
+  abstract canHandle(char: string): boolean
+  abstract handle(char: string): string
+
+  get lexer(): Lexer {
+    return this.lexing.lexer
+  }
+}
+
+class ParenthesisStartHandler extends CharHandler {
+  kind = "ParenthesisStart" as const
+
+  canHandle(char: string): boolean {
+    return this.lexer.config.parentheses
+      .map(({ start }) => start)
+      .includes(char)
   }
 
-  private nextSymbol(char: string, start: Position): IteratorResult<Token> {
-    const end = this.position
-    const span = new Span(start, end)
-    const value = new Token({ kind: "Symbol", value: char, span })
-    return { done: false, value }
+  handle(char: string): string {
+    return char
+  }
+}
+
+class ParenthesisEndHandler extends CharHandler {
+  kind = "ParenthesisEnd" as const
+
+  canHandle(char: string): boolean {
+    return this.lexer.config.parentheses.map(({ end }) => end).includes(char)
   }
 
-  private isQuote(char: string): boolean {
+  handle(char: string): string {
+    return char
+  }
+}
+
+class QuoteHandler extends CharHandler {
+  kind = "Quote" as const
+
+  canHandle(char: string): boolean {
     return this.lexer.config.quotes.map(({ mark }) => mark).includes(char)
   }
 
-  private nextQuote(char: string, start: Position): IteratorResult<Token> {
-    const end = this.position
-    const span = new Span(start, end)
-    const value = new Token({ kind: "Quote", value: char, span })
-    return { done: false, value }
+  handle(char: string): string {
+    return char
+  }
+}
+
+class SymbolHandler extends CharHandler {
+  kind = "Symbol" as const
+
+  canHandle(char: string): boolean {
+    return true
   }
 
-  private isParenthesisStart(char: string): boolean {
-    return this.lexer.config.parentheses
-      .flatMap(({ start }) => start)
-      .includes(char)
-  }
-
-  private nextParenthesisStart(
-    char: string,
-    start: Position
-  ): IteratorResult<Token> {
-    const end = this.position
-    const span = new Span(start, end)
-    const value = new Token({ kind: "ParenthesisStart", value: char, span })
-    return { done: false, value }
-  }
-
-  private isParenthesisEnd(char: string): boolean {
-    return this.lexer.config.parentheses
-      .flatMap(({ end }) => end)
-      .includes(char)
-  }
-
-  private nextParenthesisEnd(
-    char: string,
-    start: Position
-  ): IteratorResult<Token> {
-    const end = this.position
-    const span = new Span(start, end)
-    const value = new Token({ kind: "ParenthesisEnd", value: char, span })
-    return { done: false, value }
+  handle(char: string): string {
+    return char
   }
 }
