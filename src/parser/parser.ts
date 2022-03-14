@@ -1,6 +1,6 @@
 import { Lexer } from "../lexer"
 import { Sexp } from "../sexp"
-import { Token } from "../token"
+import { Parsing } from "./parsing"
 
 export class Parser {
   lexer: Lexer
@@ -10,10 +10,8 @@ export class Parser {
   }
 
   parse(text: string): Sexp {
-    return this.parseTokens(this.lexer.lex(text))
-  }
-
-  parseTokens(tokens: Array<Token>): Sexp {
-    throw new Error("TODO")
+    const tokens = this.lexer.lex(text)
+    const parsing = new Parsing(tokens)
+    return parsing.parse()
   }
 }
