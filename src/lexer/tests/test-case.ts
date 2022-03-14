@@ -14,7 +14,7 @@ export default class extends TestCase {
       { start: "[", end: "]" },
       { start: "{", end: "}" },
     ],
-    comments: [],
+    comments: [";", "//"],
   })
 
   assertLex(text: string, tokens: Array<Omit<Token, "span">>): void {

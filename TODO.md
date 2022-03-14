@@ -1,7 +1,7 @@
-- `Lexer.lex` -- handle number -- use json number
 - `Lexer.lex` -- handle double quoted string -- use json string
+- `Lexer.lex` -- handle number -- use json number
 
-- `Lexer.lex` -- handle `comments` -- be able to use `//` and `;`
+- `Lexer.lex` -- handle `row` and `column` in `Position`
 
 - `Parser.parseTokens`
 

@@ -4,6 +4,15 @@ import { Position, Span, Token, TokenKind } from "../token"
 export class Lexing implements Iterator<Token> {
   position = Position.init()
 
+  handlers: Array<CharHandler> = [
+    new SpaceHandler(this),
+    new QuoteHandler(this),
+    new ParenthesisStartHandler(this),
+    new ParenthesisEndHandler(this),
+    new CommentHandler(this),
+    new SymbolHandler(this),    
+  ]
+
   constructor(public lexer: Lexer, public text: string) {}
 
   [Symbol.iterator](): Iterator<Token> {
@@ -12,6 +21,10 @@ export class Lexing implements Iterator<Token> {
 
   get char(): string | undefined {
     return this.text[this.position.index]
+  }
+
+  get rest(): string {
+    return this.text.slice(this.position.index)
   }
 
   forward(): void {
@@ -43,14 +56,6 @@ export class Lexing implements Iterator<Token> {
 
     throw new Error(`Can not handle char: ${char}`)
   }
-
-  handlers: Array<CharHandler> = [
-    new SpaceHandler(this),
-    new QuoteHandler(this),
-    new ParenthesisStartHandler(this),
-    new ParenthesisEndHandler(this),
-    new SymbolHandler(this),
-  ]
 }
 
 abstract class CharHandler {
@@ -74,13 +79,13 @@ class SpaceHandler extends CharHandler {
   }
 
   handle(char: string): string {
-    let space = char
+    let value = char
     while (this.lexing.char !== undefined && this.lexing.char.trim() === "") {
-      space += this.lexing.char
+      value += this.lexing.char
       this.lexing.forward()
     }
 
-    return space
+    return value
   }
 }
 
@@ -122,6 +127,26 @@ class QuoteHandler extends CharHandler {
   }
 }
 
+class CommentHandler extends CharHandler {
+  kind = "Comment" as const
+
+  canHandle(char: string): boolean {
+    const text = char + this.lexing.rest
+    return this.lexer.config.comments.some((prefix) => text.startsWith(prefix))
+  }
+
+  handle(char: string): string {
+    let value = char
+
+    while (this.lexing.char !== undefined && this.lexing.char !== "\n") {
+      value += this.lexing.char
+      this.lexing.forward()
+    }
+
+    return value
+  }
+}
+
 class SymbolHandler extends CharHandler {
   kind = "Symbol" as const
 
@@ -130,17 +155,17 @@ class SymbolHandler extends CharHandler {
   }
 
   handle(char: string): string {
-    let symbol = char
+    let value = char
 
     while (
       this.lexing.char !== undefined &&
       this.lexing.char.trim() !== "" &&
       !this.lexer.marks.includes(this.lexing.char)
     ) {
-      symbol += this.lexing.char
+      value += this.lexing.char
       this.lexing.forward()
     }
 
-    return symbol
+    return value
   }
 }

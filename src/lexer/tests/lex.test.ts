@@ -37,20 +37,17 @@ export default class extends TestCase {
       { kind: "ParenthesisEnd", value: ")" },
     ])
 
-    this.assertLex("[  ]", [
-      { kind: "ParenthesisStart", value: "[" },
-      { kind: "ParenthesisEnd", value: "]" },
+    this.assertLex("( )", [
+      { kind: "ParenthesisStart", value: "(" },
+      { kind: "ParenthesisEnd", value: ")" },
     ])
 
-    this.assertLex("(a)(b)(c)", [
+    this.assertLex("(a)(b)", [
       { kind: "ParenthesisStart", value: "(" },
       { kind: "Symbol", value: "a" },
       { kind: "ParenthesisEnd", value: ")" },
       { kind: "ParenthesisStart", value: "(" },
       { kind: "Symbol", value: "b" },
-      { kind: "ParenthesisEnd", value: ")" },
-      { kind: "ParenthesisStart", value: "(" },
-      { kind: "Symbol", value: "c" },
       { kind: "ParenthesisEnd", value: ")" },
     ])
 
@@ -62,6 +59,22 @@ export default class extends TestCase {
       { kind: "ParenthesisEnd", value: "}" },
       { kind: "ParenthesisEnd", value: "]" },
       { kind: "ParenthesisEnd", value: ")" },
+    ])
+  }
+
+  ["test comments"]() {
+    this.assertLex("; abc", [{ kind: "Comment", value: "; abc" }])
+    this.assertLex("; abc\n", [{ kind: "Comment", value: "; abc" }])
+    this.assertLex("; abc\nabc", [
+      { kind: "Comment", value: "; abc" },
+      { kind: "Symbol", value: "abc" },
+    ])
+
+    this.assertLex("// abc", [{ kind: "Comment", value: "// abc" }])
+    this.assertLex("// abc\n", [{ kind: "Comment", value: "// abc" }])
+    this.assertLex("// abc\nabc", [
+      { kind: "Comment", value: "// abc" },
+      { kind: "Symbol", value: "abc" },
     ])
   }
 }
