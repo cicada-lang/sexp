@@ -26,12 +26,16 @@ export class Lexing implements Iterator<Token> {
       return { done: true, value: undefined }
     }
 
+    if (this.lexer.config.quotes.map(({ mark }) => mark).includes(char)) {
+      const end = this.position
+      const span = new Span(start, end)
+      const value = new Token({ kind: "Quote", value: char, span })
+      return { done: false, value }
+    }
+
     const end = this.position
-
     const span = new Span(start, end)
-
     const value = new Token({ kind: "Symbol", value: char, span })
-
     return { done: false, value }
   }
 }
