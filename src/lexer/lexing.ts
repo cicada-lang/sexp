@@ -1,6 +1,6 @@
 import { Lexer } from "../lexer"
 import { Position, Span, Token, TokenKind } from "../token"
-
+CharHandler
 export class Lexing implements Iterator<Token> {
   position = Position.init()
 
