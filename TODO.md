@@ -1,4 +1,4 @@
-- `Lexer.lex` -- handle number -- use json number
+- [refactor] `handle` methods call `forward`
 
 - `Lexer.lex` -- handle `row` and `column` in `Position`
 

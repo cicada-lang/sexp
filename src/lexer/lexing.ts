@@ -5,12 +5,15 @@ export class Lexing implements Iterator<Token> {
   position = Position.init()
 
   handlers: Array<CharHandler> = [
+    // NOTE The order matters, we must
+    //   try `NumberHandler` before `SymbolHandler`.
     new SpaceHandler(this),
     new QuoteHandler(this),
     new ParenthesisStartHandler(this),
     new ParenthesisEndHandler(this),
     new CommentHandler(this),
     new StringHandler(this),
+    new NumberHandler(this),
     new SymbolHandler(this),
   ]
 
@@ -66,6 +69,11 @@ abstract class CharHandler {
 
   abstract canHandle(char: string): boolean
   abstract handle(char: string): string
+
+  tryToHandle(char: string): string | undefined {
+    if (!this.canHandle(char)) return undefined
+    return this.handle(char)
+  }
 
   get lexer(): Lexer {
     return this.lexing.lexer
@@ -161,21 +169,71 @@ class StringHandler extends CharHandler {
 
     while (index <= text.length) {
       const head = text.slice(0, index)
-      const str = this.tryToParse(head)
+      const str = this.tryToParseString(head)
       if (str === undefined) {
         index++
       } else {
-        this.lexing.forward(index)
-        return str
+        this.lexing.forward(index - 1)
+        return head
       }
     }
 
     throw new Error(`Fail to parse JSON string: ${text}`)
   }
 
-  private tryToParse(text: string): string | undefined {
+  private tryToParseString(text: string): string | undefined {
     try {
       return JSON.parse(text)
+    } catch (error) {
+      return undefined
+    }
+  }
+}
+
+class NumberHandler extends CharHandler {
+  kind = "Number" as const
+
+  canHandle(char: string): boolean {
+    const text = this.lexing.rest
+    return this.lastSuccessAt(text) !== undefined
+  }
+
+  handle(char: string): string {
+    const text = char + this.lexing.rest
+    const index = this.lastSuccessAt(text)
+    if (index === undefined) {
+      throw new Error("Internal error")
+    }
+
+    this.lexing.forward(index - 1)
+    return text.slice(0, index)
+  }
+
+  private lastSuccessAt(text: string): number | undefined {
+    let index = 0
+    let lastSuccessAt: number | undefined = undefined
+    while (index <= text.length) {
+      const head = text.slice(0, index)
+      const result = this.tryToParseNumber(head)
+      if (
+        result !== undefined &&
+        text[index - 1] !== undefined &&
+        text[index - 1].trim() !== ""
+      ) {
+        lastSuccessAt = index
+      }
+
+      index++
+    }
+
+    return lastSuccessAt
+  }
+
+  private tryToParseNumber(text: string): number | undefined {
+    try {
+      const value = JSON.parse(text)
+      if (typeof value === "number") return value
+      else return undefined
     } catch (error) {
       return undefined
     }

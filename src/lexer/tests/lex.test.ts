@@ -79,12 +79,28 @@ export default class extends TestCase {
   }
 
   ["test string"]() {
-    this.assertLex('"abc"', [{ kind: "String", value: "abc" }])
+    this.assertLex('"abc"', [{ kind: "String", value: '"abc"' }])
+
     this.assertLex('"abc" "abc"', [
-      { kind: "String", value: "abc" },
-      { kind: "String", value: "abc" },
+      { kind: "String", value: '"abc"' },
+      { kind: "String", value: '"abc"' },
     ])
 
-    this.assertLex('"//"', [{ kind: "String", value: "//" }])
+    this.assertLex('"abc""abc"', [
+      { kind: "String", value: '"abc"' },
+      { kind: "String", value: '"abc"' },
+    ])
+
+    this.assertLex('"//"', [{ kind: "String", value: '"//"' }])
+  }
+
+  ["test number"]() {
+    this.assertLex("1", [{ kind: "Number", value: "1" }])
+    this.assertLex("-1", [{ kind: "Number", value: "-1" }])
+
+    this.assertLex("3.14 3.14", [
+      { kind: "Number", value: "3.14" },
+      { kind: "Number", value: "3.14" },
+    ])
   }
 }
