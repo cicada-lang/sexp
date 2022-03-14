@@ -26,34 +26,60 @@ export class Lexing implements Iterator<Token> {
       return { done: true, value: undefined }
     }
 
-    if (this.lexer.config.quotes.map(({ mark }) => mark).includes(char)) {
-      const end = this.position
-      const span = new Span(start, end)
-      const value = new Token({ kind: "Quote", value: char, span })
-      return { done: false, value }
-    }
+    if (this.isQuote(char)) return this.nextQuote(char, start)
+    if (this.isParenthesisStart(char))
+      return this.nextParenthesisStart(char, start)
+    if (this.isParenthesisEnd(char)) return this.nextParenthesisEnd(char, start)
+    else return this.nextSymbol(char, start)
+  }
 
-    if (
-      this.lexer.config.parentheses.flatMap(({ start }) => start).includes(char)
-    ) {
-      const end = this.position
-      const span = new Span(start, end)
-      const value = new Token({ kind: "ParenthesisStart", value: char, span })
-      return { done: false, value }
-    }
-
-    if (
-      this.lexer.config.parentheses.flatMap(({ end }) => end).includes(char)
-    ) {
-      const end = this.position
-      const span = new Span(start, end)
-      const value = new Token({ kind: "ParenthesisEnd", value: char, span })
-      return { done: false, value }
-    }
-
+  private nextSymbol(char: string, start: Position): IteratorResult<Token> {
     const end = this.position
     const span = new Span(start, end)
     const value = new Token({ kind: "Symbol", value: char, span })
+    return { done: false, value }
+  }
+
+  private isQuote(char: string): boolean {
+    return this.lexer.config.quotes.map(({ mark }) => mark).includes(char)
+  }
+
+  private nextQuote(char: string, start: Position): IteratorResult<Token> {
+    const end = this.position
+    const span = new Span(start, end)
+    const value = new Token({ kind: "Quote", value: char, span })
+    return { done: false, value }
+  }
+
+  private isParenthesisStart(char: string): boolean {
+    return this.lexer.config.parentheses
+      .flatMap(({ start }) => start)
+      .includes(char)
+  }
+
+  private nextParenthesisStart(
+    char: string,
+    start: Position
+  ): IteratorResult<Token> {
+    const end = this.position
+    const span = new Span(start, end)
+    const value = new Token({ kind: "ParenthesisStart", value: char, span })
+    return { done: false, value }
+  }
+
+  private isParenthesisEnd(char: string): boolean {
+    return this.lexer.config.parentheses
+      .flatMap(({ end }) => end)
+      .includes(char)
+  }
+
+  private nextParenthesisEnd(
+    char: string,
+    start: Position
+  ): IteratorResult<Token> {
+    const end = this.position
+    const span = new Span(start, end)
+    const value = new Token({ kind: "ParenthesisEnd", value: char, span })
     return { done: false, value }
   }
 }
