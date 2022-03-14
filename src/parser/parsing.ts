@@ -1,6 +1,6 @@
 import { InternalError, ParsingError } from "../errors"
 import { Parser } from "../parser"
-import { Cons, Null, Num, Sexp, Str, Sym } from "../sexp"
+import { Cons, List, Null, Num, Sexp, Str, Sym } from "../sexp"
 import { Token } from "../token"
 
 export class Parsing {
@@ -64,7 +64,7 @@ export class Parsing {
       }
 
       case "ParenthesisStart": {
-        const { cons, remain } = this.parseCons(tokens.slice(1))
+        const { list, remain } = this.parseList(tokens.slice(1))
 
         if (
           remain[0] === undefined ||
@@ -78,7 +78,7 @@ export class Parsing {
         }
 
         return {
-          sexp: cons,
+          sexp: list,
           remain: remain.slice(1),
         }
       }
@@ -105,8 +105,8 @@ export class Parsing {
     }
   }
 
-  private parseCons(tokens: Array<Token>): {
-    cons: Cons
+  private parseList(tokens: Array<Token>): {
+    list: List
     remain: Array<Token>
   } {
     throw new Error("TODO")

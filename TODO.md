@@ -1,4 +1,4 @@
-- `Parsing.parseCons`
+- `Parsing.parseList`
 
 - `Matcher.match<A>(sexp: Sexp): A` -- composable
   - API for shallow embedding -- use `SymbolArray` -- handle cons
