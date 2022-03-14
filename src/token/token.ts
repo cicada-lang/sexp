@@ -1,12 +1,12 @@
 import { Span } from "../token"
 
 export type TokenKind =
-  | "ParenthesisStart"
-  | "ParenthesisEnd"
-  | "Quote"
   | "Symbol"
   | "String"
   | "Number"
+  | "ParenthesisStart"
+  | "ParenthesisEnd"
+  | "Quote"
 
 export class Token {
   kind: TokenKind
