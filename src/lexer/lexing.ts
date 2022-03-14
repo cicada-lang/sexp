@@ -33,6 +33,24 @@ export class Lexing implements Iterator<Token> {
       return { done: false, value }
     }
 
+    if (
+      this.lexer.config.parentheses.flatMap(({ start }) => start).includes(char)
+    ) {
+      const end = this.position
+      const span = new Span(start, end)
+      const value = new Token({ kind: "ParenthesisStart", value: char, span })
+      return { done: false, value }
+    }
+
+    if (
+      this.lexer.config.parentheses.flatMap(({ end }) => end).includes(char)
+    ) {
+      const end = this.position
+      const span = new Span(start, end)
+      const value = new Token({ kind: "ParenthesisEnd", value: char, span })
+      return { done: false, value }
+    }
+
     const end = this.position
     const span = new Span(start, end)
     const value = new Token({ kind: "Symbol", value: char, span })
