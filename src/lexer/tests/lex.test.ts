@@ -16,9 +16,7 @@ export default class extends TestCase {
       { kind: "Symbol", value: "c" },
     ])
 
-    // this.assertLex("abc", [
-    //   { kind: "Symbol", value: "abc" },
-    // ])
+    // this.assertLex("abc", [{ kind: "Symbol", value: "abc" }])
   }
 
   ["test quotes"]() {
