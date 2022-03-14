@@ -1,6 +1,6 @@
-import { TestCase } from "../../infra/test-case"
-import { Lexer } from "../../lexer"
-import { Token } from "../../token"
+import { TestCase } from "../infra/test-case"
+import { Lexer } from "../lexer"
+import { Token } from "../token"
 
 export default class extends TestCase {
   lexer = new Lexer({
