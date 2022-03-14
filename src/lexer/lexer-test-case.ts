@@ -15,6 +15,7 @@ export class LexerTestCase extends TestCase {
       { start: "{", end: "}" },
     ],
     comments: [";", "//"],
+    nulls: ["null"],
   })
 
   assertLex(text: string, tokens: Array<Omit<Token, "span">>): void {
