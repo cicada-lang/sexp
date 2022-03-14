@@ -1,3 +1,4 @@
+import { ParsingError } from "../errors"
 import { Lexer } from "../lexer"
 import { ParserConfig } from "../parser"
 import { Sexp } from "../sexp"
@@ -14,7 +15,29 @@ export class Parser {
 
   parse(text: string): Sexp {
     const tokens = this.lexer.lex(text)
-    const parsing = new Parsing(this, tokens)
-    return parsing.parse()
+    const parsing = new Parsing(this)
+    const { sexp, remain } = parsing.parse(tokens)
+    if (remain.length !== 0) {
+      throw new ParsingError(
+        `I expect to consume all the tokens, but there are ${remain.length} tokens remain.`,
+        remain[0].span
+      )
+    }
+
+    return sexp
+  }
+
+  parseMany(text: string): Array<Sexp> {
+    const tokens = this.lexer.lex(text)
+    const parsing = new Parsing(this)
+    const { sexps, remain } = parsing.parseMany(tokens)
+    if (remain.length !== 0) {
+      throw new ParsingError(
+        `I expect to consume all the tokens, but there are ${remain.length} tokens remain.`,
+        remain[0].span
+      )
+    }
+
+    return sexps
   }
 }

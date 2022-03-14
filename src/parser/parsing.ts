@@ -1,4 +1,4 @@
-import { InternalError } from "../errors"
+import { InternalError, ParsingError } from "../errors"
 import { Parser } from "../parser"
 import { Cons, Null, Num, Sexp, Str, Sym } from "../sexp"
 import { Token } from "../token"
@@ -6,42 +6,61 @@ import { Token } from "../token"
 export class Parsing {
   index = 0
 
-  constructor(public parser: Parser, public tokens: Array<Token>) {}
+  constructor(public parser: Parser) {}
 
-  get token(): Token {
-    return this.tokens[this.index]
-  }
+  parse(tokens: Array<Token>): {
+    sexp: Sexp
+    remain: Array<Token>
+  } {
+    const token = tokens[0]
 
-  parse(): Sexp {
-    switch (this.token.kind) {
+    if (token === undefined) {
+      throw new ParsingError(
+        "I expect to see a token, but there is no token remain."
+      )
+    }
+
+    switch (token.kind) {
       case "Symbol": {
-        if (this.parser.config.isNull(this.token.value)) {
-          return new Null(this.token.span)
+        if (this.parser.config.isNull(token.value)) {
+          return {
+            sexp: new Null(token.span),
+            remain: tokens.slice(1),
+          }
         }
 
-        return new Sym(this.token.value, this.token.span)
+        return {
+          sexp: new Sym(token.value, token.span),
+          remain: tokens.slice(1),
+        }
       }
 
       case "Number": {
-        const value = JSON.parse(this.token.value)
+        const value = JSON.parse(token.value)
         if (typeof value !== "number") {
           throw new InternalError(
             `I Expect value to be a JSON number: ${value}`
           )
         }
 
-        return new Num(value, this.token.span)
+        return {
+          sexp: new Num(value, token.span),
+          remain: tokens.slice(1),
+        }
       }
 
       case "String": {
-        const value = JSON.parse(this.token.value)
+        const value = JSON.parse(token.value)
         if (typeof value !== "string") {
           throw new InternalError(
             `I Expect value to be a JSON string: ${value}`
           )
         }
 
-        return new Str(value, this.token.span)
+        return {
+          sexp: new Str(value, token.span),
+          remain: tokens.slice(1),
+        }
       }
 
       case "ParenthesisStart": {
@@ -59,5 +78,13 @@ export class Parsing {
         throw new Error("TODO")
       }
     }
+  }
+
+  parseMany(tokens: Array<Token>): {
+    sexps: Array<Sexp>
+    remain: Array<Token>
+  } {
+    throw new Error("TODO")
+    return { sexps: [], remain: [] }
   }
 }
