@@ -1,7 +1,7 @@
 import TestCase from "./test-case"
 
 export default class extends TestCase {
-  ["test blank text"]() {
+  ["test blank"]() {
     this.assertLex("", [])
     this.assertLex("\n", [])
     this.assertLex(" \n ", [])
@@ -76,5 +76,15 @@ export default class extends TestCase {
       { kind: "Comment", value: "// abc" },
       { kind: "Symbol", value: "abc" },
     ])
+  }
+
+  ["test string"]() {
+    this.assertLex('"abc"', [{ kind: "String", value: "abc" }])
+    this.assertLex('"abc" "abc"', [
+      { kind: "String", value: "abc" },
+      { kind: "String", value: "abc" },
+    ])
+
+    this.assertLex('"//"', [{ kind: "String", value: "//" }])
   }
 }

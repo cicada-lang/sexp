@@ -10,6 +10,7 @@ export class Lexing implements Iterator<Token> {
     new ParenthesisStartHandler(this),
     new ParenthesisEndHandler(this),
     new CommentHandler(this),
+    new StringHandler(this),
     new SymbolHandler(this),
   ]
 
@@ -27,8 +28,8 @@ export class Lexing implements Iterator<Token> {
     return this.text.slice(this.position.index)
   }
 
-  forward(): void {
-    this.position.index++
+  forward(count: number = 1): void {
+    this.position.index += count
   }
 
   next(): IteratorResult<Token> {
@@ -144,6 +145,40 @@ class CommentHandler extends CharHandler {
     }
 
     return value
+  }
+}
+
+class StringHandler extends CharHandler {
+  kind = "String" as const
+
+  canHandle(char: string): boolean {
+    return char === '"'
+  }
+
+  handle(char: string): string {
+    const text = char + this.lexing.rest
+    let index = 2 // NOTE over first `"` and the folloing char.
+
+    while (index <= text.length) {
+      const head = text.slice(0, index)
+      const str = this.tryToParse(head)
+      if (str === undefined) {
+        index++
+      } else {
+        this.lexing.forward(index)
+        return str
+      }
+    }
+
+    throw new Error(`Fail to parse JSON string: ${text}`)
+  }
+
+  private tryToParse(text: string): string | undefined {
+    try {
+      return JSON.parse(text)
+    } catch (error) {
+      return undefined
+    }
   }
 }
 
