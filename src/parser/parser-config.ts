@@ -1,4 +1,4 @@
-import { InternalError, ParsingError } from "../errors"
+import { InternalError } from "../errors"
 
 export interface ParserOptions {
   quotes: Array<{ mark: string; symbol: string }>
