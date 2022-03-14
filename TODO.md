@@ -1,5 +1,4 @@
-- `Parsing.parse` -- `Cons`
-- `Parsing.parse` -- handle `quotes` -- expend `'(1 2 3)` to `(quote (1 2 3))`
+- `Parsing.parseCons`
 
 - `Matcher.match<A>(sexp: Sexp): A` -- composable
   - API for shallow embedding -- use `SymbolArray` -- handle cons
