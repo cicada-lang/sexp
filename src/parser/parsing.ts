@@ -39,7 +39,7 @@ export class Parsing {
         const value = JSON.parse(token.value)
         if (typeof value !== "number") {
           throw new InternalError(
-            `I Expect value to be a JSON number: ${value}`
+            `I expect value to be a JSON number: ${value}`
           )
         }
 
@@ -53,7 +53,7 @@ export class Parsing {
         const value = JSON.parse(token.value)
         if (typeof value !== "string") {
           throw new InternalError(
-            `I Expect value to be a JSON string: ${value}`
+            `I expect value to be a JSON string: ${value}`
           )
         }
 
@@ -64,28 +64,51 @@ export class Parsing {
       }
 
       case "ParenthesisStart": {
-        Cons
-        throw new Error("TODO")
+        const { cons, remain } = this.parseCons(tokens.slice(1))
+
+        if (
+          remain[0] === undefined ||
+          remain[0].kind !== "ParenthesisEnd" ||
+          !this.parser.config.matchParentheses(token.value, remain[0].value)
+        ) {
+          throw new ParsingError(
+            `I expect a matching ParenthesisEnd`,
+            token.span
+          )
+        }
+
+        return {
+          sexp: cons,
+          remain: remain.slice(1),
+        }
       }
 
       case "ParenthesisEnd": {
-        Cons
-        throw new Error("TODO")
+        throw new ParsingError(`I found extra ParenthesisEnd`, token.span)
       }
 
       case "Quote": {
-        Cons
-        throw new Error("TODO")
+        const { sexp, remain } = this.parse(tokens.slice(1))
+
+        const first = new Sym(
+          this.parser.config.findQuoteSymbolOrFail(token.value),
+          token.span
+        )
+
+        const second = new Cons(sexp, new Null(token.span), token.span)
+
+        return {
+          sexp: new Cons(first, second, token.span),
+          remain,
+        }
       }
     }
   }
 
-  parseMany(tokens: Array<Token>): {
-    sexps: Array<Sexp>
-    ending?: Sexp,
+  private parseCons(tokens: Array<Token>): {
+    cons: Cons
     remain: Array<Token>
   } {
     throw new Error("TODO")
-    return { sexps: [], remain: [] }
   }
 }

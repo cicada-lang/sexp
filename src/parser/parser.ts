@@ -26,18 +26,4 @@ export class Parser {
 
     return sexp
   }
-
-  parseMany(text: string): Array<Sexp> {
-    const tokens = this.lexer.lex(text)
-    const parsing = new Parsing(this)
-    const { sexps, remain } = parsing.parseMany(tokens)
-    if (remain.length !== 0) {
-      throw new ParsingError(
-        `I expect to consume all the tokens, but there are ${remain.length} tokens remain.`,
-        remain[0].span
-      )
-    }
-
-    return sexps
-  }
 }

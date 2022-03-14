@@ -15,7 +15,7 @@ export class Position {
 
   step(char: string): void {
     if (char.length !== 1) {
-      throw new Error(`I Expect the char to be length of one: ${char}`)
+      throw new Error(`I expect the char to be length of one: ${char}`)
     }
 
     this.index++
