@@ -1,6 +1,6 @@
+import { InternalError, ParsingError } from "../errors"
 import { Lexer } from "../lexer"
 import { Position, Span, Token, TokenKind } from "../token"
-import { ParsingError, InternalError } from "../errors"
 
 export class Lexing implements Iterator<Token> {
   position = Position.init()
