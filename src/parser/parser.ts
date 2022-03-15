@@ -1,6 +1,6 @@
 import { ParsingError } from "../errors"
 import { Lexer } from "../lexer"
-import { ParserConfig } from "../parser"
+import { ParserConfig, ParserOptions } from "../parser"
 import { Sexp } from "../sexp"
 import { Token } from "../token"
 import { Parsing } from "./parsing"
@@ -12,6 +12,11 @@ export class Parser {
   constructor(options: { lexer: Lexer }) {
     this.lexer = options.lexer
     this.config = this.lexer.config
+  }
+
+  static create(config: ParserOptions): Parser {
+    const lexer = new Lexer(config)
+    return new Parser({ lexer })
   }
 
   parse(text: string): Sexp {

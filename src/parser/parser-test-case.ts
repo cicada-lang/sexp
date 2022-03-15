@@ -1,12 +1,11 @@
 import { ParsingError } from "../errors"
 import { TestCase } from "../infra/test-case"
-import { Lexer } from "../lexer"
 import { Parser } from "../parser"
 import { PatternExp } from "../pattern"
 import { Sexp } from "../sexp"
 
 export class ParserTestCase extends TestCase {
-  lexer = new Lexer({
+  parser = Parser.create({
     quotes: [
       { mark: "'", symbol: "quote" },
       { mark: ",", symbol: "unquote" },
@@ -15,14 +14,9 @@ export class ParserTestCase extends TestCase {
     parentheses: [
       { start: "(", end: ")" },
       { start: "[", end: "]" },
-      { start: "{", end: "}" },
     ],
     comments: [";", "//"],
-    nulls: ["null"],
-  })
-
-  parser = new Parser({
-    lexer: this.lexer,
+    nulls: ["null", "nil"],
   })
 
   assertSexps(
