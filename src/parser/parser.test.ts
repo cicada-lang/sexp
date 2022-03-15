@@ -17,6 +17,7 @@ export default class extends ParserTestCase {
   }
 
   ["test list"]() {
+    this.assertParse("()")
     this.assertParse("(a b c)")
   }
 

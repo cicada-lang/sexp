@@ -12,7 +12,6 @@ export class ParserConfig {
   parentheses: Array<{ start: string; end: string }>
   comments: Array<string>
   nulls: Array<string>
-
   marks: Array<string>
 
   constructor(options: ParserOptions) {
@@ -20,7 +19,6 @@ export class ParserConfig {
     this.parentheses = options.parentheses
     this.comments = options.comments
     this.nulls = options.nulls
-
     this.marks = [
       ...options.quotes.map(({ mark }) => mark),
       ...options.parentheses.flatMap(({ start, end }) => [start, end]),
