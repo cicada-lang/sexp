@@ -1,7 +1,7 @@
 import { InternalError } from "../errors"
 import { Pattern } from "../pattern"
 import * as Patterns from "../patterns"
-import { ConsExp, ListExp, PatternExp, StrExp } from "./pattern-exp"
+import { ConsExp, ListExp, PatternExp, StrExp, VarExp } from "./pattern-exp"
 
 export function evaluatePatternExp(exp: PatternExp): Pattern {
   if (typeof exp === "number") {
@@ -36,6 +36,9 @@ export function evaluatePatternExp(exp: PatternExp): Pattern {
 
   if (exp instanceof StrExp) {
     return new Patterns.StrPattern(exp.value)
+  }
+  if (exp instanceof VarExp) {
+    return new Patterns.VarPattern(exp.name)
   }
 
   if (exp instanceof ConsExp) {

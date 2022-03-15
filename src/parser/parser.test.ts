@@ -1,4 +1,4 @@
-import { cons, list, str } from "../pattern"
+import { cons, list, str, v } from "../pattern"
 import { ParserTestCase } from "./parser-test-case"
 
 export default class extends ParserTestCase {
@@ -34,5 +34,10 @@ export default class extends ParserTestCase {
     this.assertSexp("'(a b c)", ["quote", ["a", "b", "c"]])
     this.assertSexp(",(a b c)", ["unquote", ["a", "b", "c"]])
     this.assertSexp("`(a ,b c)", ["quasiquote", ["a", ["unquote", "b"], "c"]])
+  }
+
+  ["test variable in pattern"]() {
+    const results = this.assertSexp("(a b c)", ["a", v("x"), "c"])
+    this.assertEquals(results["x"].value, "b")
   }
 }

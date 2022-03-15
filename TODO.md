@@ -1,7 +1,3 @@
-- `VariablePattern`
-
-- `Pattern.match(sexp: Sexp): PatternMatchResults`
-
 - `ParsingError` -- report error in `context`
 
 # after then
