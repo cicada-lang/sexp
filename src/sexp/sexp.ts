@@ -1,14 +1,14 @@
-import { evaluatePatternExp, PatternExp } from "../pattern"
+import { evaluate, PatternExp } from "../pattern-exp"
 import { Span } from "../token"
 
 export abstract class Sexp {
   abstract span: Span
 
   match(exp: PatternExp): Record<string, Sexp> | undefined {
-    return evaluatePatternExp(exp).match(this, {})
+    return evaluate(exp).match(this, {})
   }
 
   matchOrFail(exp: PatternExp): Record<string, Sexp> {
-    return evaluatePatternExp(exp).matchOrFail(this, {})
+    return evaluate(exp).matchOrFail(this, {})
   }
 }

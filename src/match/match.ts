@@ -1,4 +1,4 @@
-import { PatternExp } from "../pattern"
+import { PatternExp } from "../pattern-exp"
 import { Sexp } from "../sexp"
 import * as Sexps from "../sexps"
 

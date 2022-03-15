@@ -3,7 +3,7 @@ import { Pattern } from "../pattern"
 import * as Patterns from "../patterns"
 import { ConsExp, ListExp, PatternExp, StrExp, VarExp } from "./pattern-exp"
 
-export function evaluatePatternExp(exp: PatternExp): Pattern {
+export function evaluate(exp: PatternExp): Pattern {
   if (typeof exp === "number") {
     return new Patterns.NumPattern(exp)
   }
@@ -16,19 +16,17 @@ export function evaluatePatternExp(exp: PatternExp): Pattern {
     let pattern = new Patterns.NullPattern()
 
     for (const head of [...exp].reverse()) {
-      pattern = new Patterns.ConsPattern(evaluatePatternExp(head), pattern)
+      pattern = new Patterns.ConsPattern(evaluate(head), pattern)
     }
 
     return pattern
   }
 
   if (exp instanceof ListExp) {
-    let pattern = exp.end
-      ? evaluatePatternExp(exp.end)
-      : new Patterns.NullPattern()
+    let pattern = exp.end ? evaluate(exp.end) : new Patterns.NullPattern()
 
     for (const head of [...exp.exps].reverse()) {
-      pattern = new Patterns.ConsPattern(evaluatePatternExp(head), pattern)
+      pattern = new Patterns.ConsPattern(evaluate(head), pattern)
     }
 
     return pattern
@@ -42,10 +40,7 @@ export function evaluatePatternExp(exp: PatternExp): Pattern {
   }
 
   if (exp instanceof ConsExp) {
-    return new Patterns.ConsPattern(
-      evaluatePatternExp(exp.head),
-      evaluatePatternExp(exp.tail)
-    )
+    return new Patterns.ConsPattern(evaluate(exp.head), evaluate(exp.tail))
   }
 
   throw new InternalError(`Unknown pattern exp: ${exp}`)

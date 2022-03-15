@@ -1,4 +1,4 @@
-import { cons, list, str, v } from "../pattern"
+import { cons, list, str, v } from "../pattern-exp"
 import { ParserTestCase } from "./parser-test-case"
 
 export default class extends ParserTestCase {
