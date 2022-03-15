@@ -17,9 +17,7 @@ export class StrPattern extends Pattern {
     }
 
     if (!(sexp.value !== this.value)) {
-      throw new MatchingError(
-        `I expect sexp to be a string equal to ${this.value}`
-      )
+      throw new MatchingError(`I expect sexp to be equal to ${this.value}`)
     }
 
     return results
