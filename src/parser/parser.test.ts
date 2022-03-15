@@ -40,4 +40,22 @@ export default class extends ParserTestCase {
     const results = this.assertSexp("(a b c)", ["a", v("x"), "c"])
     this.assertEquals((results["x"] as any).value, "b")
   }
+
+  ["test many sexps"]() {
+    const results = this.assertSexps(
+      [
+        //
+        "a",
+        "(a b c)",
+        "'(a b c)",
+        "(a b c . d)",
+      ].join("\n"),
+      [
+        "a",
+        ["a", "b", "c"],
+        ["quote", ["a", "b", "c"]],
+        list(["a", "b", "c"], "d"),
+      ]
+    )
+  }
 }

@@ -25,6 +25,33 @@ export class ParserTestCase extends TestCase {
     lexer: this.lexer,
   })
 
+  assertSexps(
+    text: string,
+    exps: Array<PatternExp>
+  ): Array<Record<string, Sexp>> {
+    try {
+      const sexps = this.parser.parseMany(text)
+      if (sexps.length !== exps.length) {
+        throw new Error(
+          `Length mismatch, sexps: ${sexps.length}, exps: ${exps.length}`
+        )
+      }
+
+      return sexps.map((sexp, i) => {
+        const exp = exps[i]
+        const pattern = evaluatePatternExp(exp)
+        return pattern.matchOrFail(sexp, {})
+      })
+    } catch (error) {
+      if (error instanceof ParsingError) {
+        const report = error.span.report(text)
+        console.log(report)
+      }
+
+      throw error
+    }
+  }
+
   assertSexp(text: string, exp: PatternExp): Record<string, Sexp> {
     try {
       const sexp = this.parser.parse(text)
