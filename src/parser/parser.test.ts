@@ -38,6 +38,6 @@ export default class extends ParserTestCase {
 
   ["test variable in pattern"]() {
     const results = this.assertSexp("(a b c)", ["a", v("x"), "c"])
-    this.assertEquals(results["x"].value, "b")
+    this.assertEquals((results["x"] as any).value, "b")
   }
 }
