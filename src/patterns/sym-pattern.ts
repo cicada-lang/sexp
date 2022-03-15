@@ -13,11 +13,11 @@ export class SymPattern extends Pattern {
     results: Record<string, Sexp> = {}
   ): Record<string, Sexp> {
     if (!(sexp instanceof Sexps.Sym)) {
-      throw new MatchingError(`I expect sexp to be symbol`)
+      throw new MatchingError(`I expect the sexp to be a symbol`)
     }
 
     if (!(sexp.value !== this.value)) {
-      throw new MatchingError(`I expect sexp to be equal to ${this.value}`)
+      throw new MatchingError(`I expect the sexp to be equal to ${this.value}`)
     }
 
     return results

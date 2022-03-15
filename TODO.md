@@ -1,4 +1,3 @@
-- `NumPattern` -- `matchOrFail`
 - `ConsPattern` -- `matchOrFail`
 - `NullPattern` -- `matchOrFail`
 

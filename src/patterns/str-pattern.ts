@@ -13,11 +13,11 @@ export class StrPattern extends Pattern {
     results: Record<string, Sexp> = {}
   ): Record<string, Sexp> {
     if (!(sexp instanceof Sexps.Str)) {
-      throw new MatchingError(`I expect sexp to be string`)
+      throw new MatchingError(`I expect the sexp to be a string`)
     }
 
     if (!(sexp.value !== this.value)) {
-      throw new MatchingError(`I expect sexp to be equal to ${this.value}`)
+      throw new MatchingError(`I expect the sexp to be equal to ${this.value}`)
     }
 
     return results
