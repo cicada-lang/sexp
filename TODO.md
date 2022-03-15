@@ -1,5 +1,3 @@
-- `evaluatePatternExp`
-
 - `Parsing` test quotes
 
 - `VariablePattern`
