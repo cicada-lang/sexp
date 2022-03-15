@@ -6,16 +6,16 @@ export type PatternExp =
   | ListExp
   | Array<PatternExp>
 
-class StrExp {
+export class StrExp {
   constructor(public value: string) {}
 }
 
-class ConsExp {
+export class ConsExp {
   constructor(public head: PatternExp, public tail: PatternExp) {}
 }
 
-class ListExp {
-  constructor(public list: Array<PatternExp>, public end?: PatternExp) {}
+export class ListExp {
+  constructor(public exps: Array<PatternExp>, public end?: PatternExp) {}
 }
 
 export function str(value: string): StrExp {

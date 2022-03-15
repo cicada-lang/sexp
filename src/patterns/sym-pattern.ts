@@ -16,8 +16,10 @@ export class SymPattern extends Pattern {
       throw new MatchingError(`I expect the sexp to be a symbol`)
     }
 
-    if (!(sexp.value !== this.value)) {
-      throw new MatchingError(`I expect the sexp to be equal to ${this.value}`)
+    if (!(sexp.value === this.value)) {
+      throw new MatchingError(
+        `I expect the sexp to be equal to ${this.value}, but it is ${sexp.value}`
+      )
     }
 
     return results
