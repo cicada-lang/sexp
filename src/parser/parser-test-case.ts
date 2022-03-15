@@ -25,6 +25,7 @@ export class ParserTestCase extends TestCase {
 
   assertSexp(text: string, exp: PatternExp): void {
     const sexp = this.parser.parse(text)
-    evaluatePatternExp(exp).matchOrFail(sexp)
+    const pattern = evaluatePatternExp(exp)
+    pattern.matchOrFail(sexp, {})
   }
 }

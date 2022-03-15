@@ -8,7 +8,20 @@ export class StrPattern extends Pattern {
     super()
   }
 
-  matchOrFail(sexp: Sexp): Record<string, Sexp> {
-    throw new Error()
+  matchOrFail(
+    sexp: Sexp,
+    results: Record<string, Sexp> = {}
+  ): Record<string, Sexp> {
+    if (!(sexp instanceof Sexps.Str)) {
+      throw new MatchingError(`I expect sexp to be string`)
+    }
+
+    if (!(sexp.value !== this.value)) {
+      throw new MatchingError(
+        `I expect sexp to be a string equal to ${this.value}`
+      )
+    }
+
+    return results
   }
 }

@@ -1,6 +1,5 @@
 - `SymPattern` -- `matchOrFail`
 - `NumPattern` -- `matchOrFail`
-- `StrPattern` -- `matchOrFail`
 - `ConsPattern` -- `matchOrFail`
 - `NullPattern` -- `matchOrFail`
 
