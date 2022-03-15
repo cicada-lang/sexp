@@ -1,6 +1,10 @@
-- `evaluatePatternExp`
-- `Pattern.matchOrFail(sexp: Sexp)`
+- `SymPattern` -- `matchOrFail`
+- `NumPattern` -- `matchOrFail`
+- `StrPattern` -- `matchOrFail`
+- `ConsPattern` -- `matchOrFail`
+- `NullPattern` -- `matchOrFail`
 
+- `evaluatePatternExp`
 
 - `Parsing` test quotes
 

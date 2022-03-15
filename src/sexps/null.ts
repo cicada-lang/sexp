@@ -1,4 +1,4 @@
-import { List } from "../sexp"
+import { List } from "../sexps"
 import { Span } from "../token"
 
 export class Null extends List {

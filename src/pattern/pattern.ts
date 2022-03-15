@@ -1,4 +1,5 @@
 import { Sexp } from "../sexp"
+import { MatchingError } from "../errors"
 
 export abstract class Pattern {
   abstract matchOrFail(sexp: Sexp): Record<string, Sexp>
@@ -6,38 +7,9 @@ export abstract class Pattern {
   match(sexp: Sexp): Record<string, Sexp> | undefined {
     try {
       return this.matchOrFail(sexp)
-    } catch (_error) {
-      return undefined
+    } catch (error) {
+      if (error instanceof MatchingError) return undefined
+      else throw error
     }
-  }
-}
-
-export class SymbolPattern extends Pattern {
-  matchOrFail(sexp: Sexp): Record<string, Sexp> {
-    throw new Error()
-  }
-}
-
-export class NumberPattern extends Pattern {
-  matchOrFail(sexp: Sexp): Record<string, Sexp> {
-    throw new Error()
-  }
-}
-
-export class StringPattern extends Pattern {
-  matchOrFail(sexp: Sexp): Record<string, Sexp> {
-    throw new Error()
-  }
-}
-
-export class ConsPattern extends Pattern {
-  matchOrFail(sexp: Sexp): Record<string, Sexp> {
-    throw new Error()
-  }
-}
-
-export class NullPattern extends Pattern {
-  matchOrFail(sexp: Sexp): Record<string, Sexp> {
-    throw new Error()
   }
 }

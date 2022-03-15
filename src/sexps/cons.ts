@@ -1,4 +1,5 @@
-import { List, Sexp } from "../sexp"
+import { Sexp } from "../sexp"
+import { List } from "../sexps"
 import { Span } from "../token"
 
 export class Cons extends List {

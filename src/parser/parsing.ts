@@ -1,6 +1,7 @@
 import { InternalError, ParsingError } from "../errors"
 import { Parser } from "../parser"
-import { Cons, List, Null, Num, Sexp, Str, Sym } from "../sexp"
+import { Sexp } from "../sexp"
+import * as Sexps from "../sexps"
 import { Position, Span, Token } from "../token"
 
 type Result = { sexp: Sexp; remain: Array<Token> }
@@ -24,13 +25,13 @@ export class Parsing {
       case "Symbol": {
         if (this.parser.config.isNull(token.value)) {
           return {
-            sexp: new Null(token.span),
+            sexp: new Sexps.Null(token.span),
             remain: tokens.slice(1),
           }
         }
 
         return {
-          sexp: new Sym(token.value, token.span),
+          sexp: new Sexps.Sym(token.value, token.span),
           remain: tokens.slice(1),
         }
       }
@@ -43,7 +44,10 @@ export class Parsing {
           )
         }
 
-        return { sexp: new Num(value, token.span), remain: tokens.slice(1) }
+        return {
+          sexp: new Sexps.Num(value, token.span),
+          remain: tokens.slice(1),
+        }
       }
 
       case "String": {
@@ -54,11 +58,18 @@ export class Parsing {
           )
         }
 
-        return { sexp: new Str(value, token.span), remain: tokens.slice(1) }
+        return {
+          sexp: new Sexps.Str(value, token.span),
+          remain: tokens.slice(1),
+        }
       }
 
       case "ParenthesisStart": {
-        return this.parseList(token, tokens.slice(1), new Null(token.span))
+        return this.parseList(
+          token,
+          tokens.slice(1),
+          new Sexps.Null(token.span)
+        )
       }
 
       case "ParenthesisEnd": {
@@ -68,26 +79,30 @@ export class Parsing {
       case "Quote": {
         const { sexp, remain } = this.parse(tokens.slice(1))
 
-        const first = new Sym(
+        const first = new Sexps.Sym(
           this.parser.config.findQuoteSymbolOrFail(token.value),
           token.span
         )
 
-        const second = new Cons(
+        const second = new Sexps.Cons(
           sexp,
-          new Null(token.span),
+          new Sexps.Null(token.span),
           token.span.union(sexp.span)
         )
 
         return {
-          sexp: new Cons(first, second, first.span.union(second.span)),
+          sexp: new Sexps.Cons(first, second, first.span.union(second.span)),
           remain,
         }
       }
     }
   }
 
-  private parseList(start: Token, tokens: Array<Token>, list: List): Result {
+  private parseList(
+    start: Token,
+    tokens: Array<Token>,
+    list: Sexps.List
+  ): Result {
     if (tokens[0] === undefined) {
       throw new ParsingError(`Missing ParenthesisEnd`, start.span)
     }
@@ -117,7 +132,7 @@ export class Parsing {
     const { sexp, remain } = this.parseList(start, head.remain, list)
 
     return {
-      sexp: new Cons(head.sexp, sexp, head.sexp.span.union(sexp.span)),
+      sexp: new Sexps.Cons(head.sexp, sexp, head.sexp.span.union(sexp.span)),
       remain,
     }
   }

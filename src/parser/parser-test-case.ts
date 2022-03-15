@@ -1,7 +1,7 @@
 import { TestCase } from "../infra/test-case"
 import { Lexer } from "../lexer"
 import { Parser } from "../parser"
-import { PatternExp, evaluatePatternExp } from "../pattern"
+import { evaluatePatternExp, PatternExp } from "../pattern"
 
 export class ParserTestCase extends TestCase {
   lexer = new Lexer({
