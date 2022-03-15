@@ -1,5 +1,4 @@
 - `ConsPattern` -- `matchOrFail`
-- `NullPattern` -- `matchOrFail`
 
 - `evaluatePatternExp`
 

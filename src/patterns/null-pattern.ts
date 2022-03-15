@@ -4,7 +4,14 @@ import * as Sexps from "../sexps"
 import { MatchingError } from "../errors"
 
 export class NullPattern extends Pattern {
-  matchOrFail(sexp: Sexp): Record<string, Sexp> {
-    throw new Error()
+  matchOrFail(
+    sexp: Sexp,
+    results: Record<string, Sexp> = {}
+  ): Record<string, Sexp> {
+    if (!(sexp instanceof Sexps.Null)) {
+      throw new MatchingError(`I expect the sexp to be a number`)
+    }
+
+    return results
   }
 }
