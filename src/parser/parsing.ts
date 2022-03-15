@@ -64,22 +64,11 @@ export class Parsing {
       }
 
       case "ParenthesisStart": {
-        const { list, remain } = this.parseList(tokens.slice(1))
-
-        if (
-          remain[0] === undefined ||
-          remain[0].kind !== "ParenthesisEnd" ||
-          !this.parser.config.matchParentheses(token.value, remain[0].value)
-        ) {
-          throw new ParsingError(
-            `I expect a matching ParenthesisEnd`,
-            token.span
-          )
-        }
+        const { list, remain } = this.parseList(token, tokens.slice(1))
 
         return {
           sexp: list,
-          remain: remain.slice(1),
+          remain,
         }
       }
 
@@ -105,10 +94,41 @@ export class Parsing {
     }
   }
 
-  private parseList(tokens: Array<Token>): {
+  private parseList(
+    startToken: Token,
+    tokens: Array<Token>,
+    list: List = new Null()
+  ): {
     list: List
     remain: Array<Token>
   } {
-    throw new Error("TODO")
+    if (tokens[0] === undefined) {
+      throw new ParsingError(`Missing ParenthesisEnd`, startToken.span)
+    }
+
+    if (tokens[0].kind === "ParenthesisEnd") {
+      if (
+        !this.parser.config.matchParentheses(startToken.value, tokens[0].value)
+      ) {
+        throw new ParsingError(
+          `I expect a matching ParenthesisEnd`,
+          startToken.span
+        )
+      }
+
+      return {
+        list,
+        remain: tokens.slice(1),
+      }
+    }
+
+    const { sexp, remain } = this.parse(tokens)
+
+    const result = this.parseList(startToken, remain, list)
+
+    return {
+      list: new Cons(sexp, result.list),
+      remain: result.remain,
+    }
   }
 }

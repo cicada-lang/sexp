@@ -1,0 +1,31 @@
+import { TestCase } from "../infra/test-case"
+import { Lexer } from "../lexer"
+import { Parser } from "../parser"
+import { Token } from "../token"
+
+export class ParserTestCase extends TestCase {
+  lexer = new Lexer({
+    quotes: [
+      { mark: "'", symbol: "quote" },
+      { mark: ",", symbol: "unquote" },
+      { mark: "`", symbol: "quasiquote" },
+    ],
+    parentheses: [
+      { start: "(", end: ")" },
+      { start: "[", end: "]" },
+      { start: "{", end: "}" },
+    ],
+    comments: [";", "//"],
+    nulls: ["null"],
+  })
+
+  parser = new Parser({
+    lexer: this.lexer,
+  })
+
+  assertParse(text: string): void {
+    const sexp = this.parser.parse(text)
+
+    console.log(sexp)
+  }
+}
