@@ -3,15 +3,14 @@ import { Parser } from "../parser"
 import { Cons, List, Null, Num, Sexp, Str, Sym } from "../sexp"
 import { Position, Span, Token } from "../token"
 
+type Result = { sexp: Sexp; remain: Array<Token> }
+
 export class Parsing {
   index = 0
 
   constructor(public parser: Parser) {}
 
-  parse(tokens: Array<Token>): {
-    sexp: Sexp
-    remain: Array<Token>
-  } {
+  parse(tokens: Array<Token>): Result {
     const token = tokens[0]
 
     if (token === undefined) {
@@ -59,9 +58,7 @@ export class Parsing {
       }
 
       case "ParenthesisStart": {
-        const { list, remain } = this.parseList(token, tokens.slice(1))
-
-        return { sexp: list, remain }
+        return this.parseList(token, tokens.slice(1), new Null(token.span))
       }
 
       case "ParenthesisEnd": {
@@ -90,40 +87,28 @@ export class Parsing {
     }
   }
 
-  private parseList(
-    startToken: Token,
-    tokens: Array<Token>,
-    ending: List = new Null(startToken.span)
-  ): {
-    list: List
-    remain: Array<Token>
-  } {
+  private parseList(start: Token, tokens: Array<Token>, ending: List): Result {
     if (tokens[0] === undefined) {
-      throw new ParsingError(`Missing ParenthesisEnd`, startToken.span)
+      throw new ParsingError(`Missing ParenthesisEnd`, start.span)
     }
 
     if (tokens[0].kind === "ParenthesisEnd") {
-      if (
-        !this.parser.config.matchParentheses(startToken.value, tokens[0].value)
-      ) {
-        throw new ParsingError(
-          `I expect a matching ParenthesisEnd`,
-          startToken.span
-        )
+      if (!this.parser.config.matchParentheses(start.value, tokens[0].value)) {
+        throw new ParsingError(`I expect a matching ParenthesisEnd`, start.span)
       }
 
       ending.span = tokens[0].span
 
-      return { list: ending, remain: tokens.slice(1) }
+      return { sexp: ending, remain: tokens.slice(1) }
     }
 
-    const { sexp, remain } = this.parse(tokens)
+    const head = this.parse(tokens)
 
-    const result = this.parseList(startToken, remain, ending)
+    const { sexp, remain } = this.parseList(start, head.remain, ending)
 
     return {
-      list: new Cons(sexp, result.list, sexp.span.union(result.list.span)),
-      remain: result.remain,
+      sexp: new Cons(head.sexp, sexp, head.sexp.span.union(sexp.span)),
+      remain,
     }
   }
 }
