@@ -1,5 +1,3 @@
-- `ConsPattern` -- `matchOrFail`
-
 - `evaluatePatternExp`
 
 - `Parsing` test quotes

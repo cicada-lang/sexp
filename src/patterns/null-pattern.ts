@@ -9,7 +9,7 @@ export class NullPattern extends Pattern {
     results: Record<string, Sexp> = {}
   ): Record<string, Sexp> {
     if (!(sexp instanceof Sexps.Null)) {
-      throw new MatchingError(`I expect the sexp to be a number`)
+      throw new MatchingError(`I expect the sexp to be a null`)
     }
 
     return results

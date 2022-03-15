@@ -4,11 +4,21 @@ import * as Sexps from "../sexps"
 import { MatchingError } from "../errors"
 
 export class ConsPattern extends Pattern {
-  constructor(public head: Sexp, public tail: Sexp) {
+  constructor(public head: Pattern, public tail: Pattern) {
     super()
   }
 
-  matchOrFail(sexp: Sexp): Record<string, Sexp> {
-    throw new Error()
+  matchOrFail(
+    sexp: Sexp,
+    results: Record<string, Sexp> = {}
+  ): Record<string, Sexp> {
+    if (!(sexp instanceof Sexps.Cons)) {
+      throw new MatchingError(`I expect the sexp to be a cons`)
+    }
+
+    results = this.head.matchOrFail(sexp.head, results)
+    results = this.tail.matchOrFail(sexp.tail, results)
+
+    return results
   }
 }
