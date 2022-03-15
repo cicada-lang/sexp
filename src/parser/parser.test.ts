@@ -1,3 +1,4 @@
+import { list, str } from "../pattern"
 import { ParserTestCase } from "./parser-test-case"
 
 export default class extends ParserTestCase {
@@ -6,10 +7,7 @@ export default class extends ParserTestCase {
   }
 
   ["test string"]() {
-    this.assertSexp(
-      '"abc"'
-      // , str("abc")
-    )
+    this.assertSexp('"abc"', str("abc"))
   }
 
   ["test number"]() {
@@ -20,21 +18,12 @@ export default class extends ParserTestCase {
   }
 
   ["test list"]() {
-    this.assertSexp("()", []),
-      this.assertSexp(
-        "(a b c)"
-        // , Pattern.list(["a", "b", "c"])
-      )
+    this.assertSexp("()", [])
+    this.assertSexp("(a b c)", ["a", "b", "c"])
   }
 
   ["test non proper list"]() {
-    this.assertSexp(
-      "(a . d)"
-      // , Pattern.list(['a'], { end: 'd' })
-    )
-    this.assertSexp(
-      "(a b c . d)"
-      // , Pattern.list(['a', 'b', 'c'], { end: 'd' })
-    )
+    this.assertSexp("(a . d)", list(["a"], "d"))
+    this.assertSexp("(a b c . d)", list(["a", "b", "c"], "d"))
   }
 }

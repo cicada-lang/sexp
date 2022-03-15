@@ -1,12 +1,9 @@
-- `Parsing` setup test workflow -- with help of `PatternExp`
-
 - `Pattern.evaluate(exp: PatternExp)`
+- `Pattern.assert(sexp: Sexp)`
 
 - `Parsing` test quotes
 
-- `Matcher.match<A>(sexp: Sexp): A` -- composable
-
-  - API for shallow embedding -- use `Pattern`
+- `Pattern.match(sexp: Sexp): PatternMatchResults`
 
 - `ParsingError` -- report error in `context`
 
