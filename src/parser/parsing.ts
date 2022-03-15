@@ -87,9 +87,19 @@ export class Parsing {
     }
   }
 
-  private parseList(start: Token, tokens: Array<Token>, ending: List): Result {
+  private parseList(start: Token, tokens: Array<Token>, list: List): Result {
     if (tokens[0] === undefined) {
       throw new ParsingError(`Missing ParenthesisEnd`, start.span)
+    }
+
+    if (tokens[0].kind === "Symbol" && tokens[0].value === ".") {
+      const { sexp, remain } = this.parse(tokens.slice(1))
+
+      if (!this.parser.config.matchParentheses(start.value, remain[0].value)) {
+        throw new ParsingError(`I expect a matching ParenthesisEnd`, start.span)
+      }
+
+      return { sexp, remain: remain.slice(1) }
     }
 
     if (tokens[0].kind === "ParenthesisEnd") {
@@ -97,14 +107,14 @@ export class Parsing {
         throw new ParsingError(`I expect a matching ParenthesisEnd`, start.span)
       }
 
-      ending.span = tokens[0].span
+      list.span = tokens[0].span
 
-      return { sexp: ending, remain: tokens.slice(1) }
+      return { sexp: list, remain: tokens.slice(1) }
     }
 
     const head = this.parse(tokens)
 
-    const { sexp, remain } = this.parseList(start, head.remain, ending)
+    const { sexp, remain } = this.parseList(start, head.remain, list)
 
     return {
       sexp: new Cons(head.sexp, sexp, head.sexp.span.union(sexp.span)),

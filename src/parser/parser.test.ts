@@ -19,4 +19,9 @@ export default class extends ParserTestCase {
   ["test list"]() {
     this.assertParse("(a b c)")
   }
+
+  ["test non proper list"]() {
+    this.assertParse("(a . d)")
+    this.assertParse("(a b c . d)")
+  }
 }
