@@ -1,4 +1,4 @@
-import { list, str } from "../pattern"
+import { cons, list, str } from "../pattern"
 import { ParserTestCase } from "./parser-test-case"
 
 export default class extends ParserTestCase {
@@ -23,7 +23,16 @@ export default class extends ParserTestCase {
   }
 
   ["test non proper list"]() {
+    this.assertSexp("(a . d)", cons("a", "d"))
     this.assertSexp("(a . d)", list(["a"], "d"))
     this.assertSexp("(a b c . d)", list(["a", "b", "c"], "d"))
+  }
+
+  ["test quotes"]() {
+    this.assertSexp("'a", ["quote", "a"])
+    this.assertSexp("'(a)", ["quote", ["a"]])
+    this.assertSexp("'(a b c)", ["quote", ["a", "b", "c"]])
+    this.assertSexp(",(a b c)", ["unquote", ["a", "b", "c"]])
+    this.assertSexp("`(a ,b c)", ["quasiquote", ["a", ["unquote", "b"], "c"]])
   }
 }

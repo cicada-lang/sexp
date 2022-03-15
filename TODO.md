@@ -1,5 +1,3 @@
-- `Parsing` test quotes
-
 - `VariablePattern`
 
 - `Pattern.match(sexp: Sexp): PatternMatchResults`
