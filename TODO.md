@@ -1,3 +1,5 @@
+- `Parsing.parseList` handle `(a . d)` & `(a b . d)`
+
 - `Parsing` setup test workflow
 
 - `Matcher.match<A>(sexp: Sexp): A` -- composable

@@ -1,7 +1,7 @@
 import { InternalError, ParsingError } from "../errors"
 import { Parser } from "../parser"
 import { Cons, List, Null, Num, Sexp, Str, Sym } from "../sexp"
-import { Token } from "../token"
+import { Position, Span, Token } from "../token"
 
 export class Parsing {
   index = 0
@@ -16,7 +16,8 @@ export class Parsing {
 
     if (token === undefined) {
       throw new ParsingError(
-        "I expect to see a token, but there is no token remain."
+        "I expect to see a token, but there is no token remain.",
+        new Span(Position.init(), Position.init())
       )
     }
 
@@ -43,10 +44,7 @@ export class Parsing {
           )
         }
 
-        return {
-          sexp: new Num(value, token.span),
-          remain: tokens.slice(1),
-        }
+        return { sexp: new Num(value, token.span), remain: tokens.slice(1) }
       }
 
       case "String": {
@@ -57,19 +55,13 @@ export class Parsing {
           )
         }
 
-        return {
-          sexp: new Str(value, token.span),
-          remain: tokens.slice(1),
-        }
+        return { sexp: new Str(value, token.span), remain: tokens.slice(1) }
       }
 
       case "ParenthesisStart": {
         const { list, remain } = this.parseList(token, tokens.slice(1))
 
-        return {
-          sexp: list,
-          remain,
-        }
+        return { sexp: list, remain }
       }
 
       case "ParenthesisEnd": {
@@ -84,10 +76,14 @@ export class Parsing {
           token.span
         )
 
-        const second = new Cons(sexp, new Null(token.span), token.span)
+        const second = new Cons(
+          sexp,
+          new Null(token.span),
+          token.span.union(sexp.span)
+        )
 
         return {
-          sexp: new Cons(first, second, token.span),
+          sexp: new Cons(first, second, first.span.union(second.span)),
           remain,
         }
       }
@@ -97,7 +93,7 @@ export class Parsing {
   private parseList(
     startToken: Token,
     tokens: Array<Token>,
-    list: List = new Null()
+    ending: List = new Null(startToken.span)
   ): {
     list: List
     remain: Array<Token>
@@ -116,18 +112,21 @@ export class Parsing {
         )
       }
 
-      return {
-        list,
-        remain: tokens.slice(1),
-      }
+      ending.span = tokens[0].span
+
+      return { list: ending, remain: tokens.slice(1) }
     }
 
     const { sexp, remain } = this.parse(tokens)
 
-    const result = this.parseList(startToken, remain, list)
+    const result = this.parseList(startToken, remain, ending)
 
     return {
-      list: new Cons(sexp, result.list),
+      list: new Cons(
+        sexp,
+        result.list,
+        sexp.span.union(result.list.span)
+      ),
       remain: result.remain,
     }
   }

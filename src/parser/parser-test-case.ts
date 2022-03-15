@@ -25,6 +25,6 @@ export class ParserTestCase extends TestCase {
   assertParse(text: string): void {
     const sexp = this.parser.parse(text)
 
-    console.log(sexp)
+    console.dir(sexp, { depth: null })
   }
 }
