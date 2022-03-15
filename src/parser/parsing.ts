@@ -12,32 +12,37 @@ export class Parsing {
   constructor(public parser: Parser) {}
 
   parse(tokens: Array<Token>): Result {
-    const token = tokens[0]
-
-    if (token === undefined) {
+    if (tokens[0] === undefined) {
       throw new ParsingError(
         "I expect to see a token, but there is no token remain.",
         new Span(Position.init(), Position.init())
       )
     }
 
-    switch (token.kind) {
+    switch (tokens[0].kind) {
       case "Symbol": {
-        if (this.parser.config.isNull(token.value)) {
+        if (this.parser.config.isNull(tokens[0].value)) {
           return {
-            sexp: new Sexps.Null(token.span),
+            sexp: new Sexps.Null(tokens[0].span),
             remain: tokens.slice(1),
           }
         }
 
+        if (tokens[0].value === ".") {
+          throw new ParsingError(
+            `I found "." (the dot) at wrong place.`,
+            tokens[0].span
+          )
+        }
+
         return {
-          sexp: new Sexps.Sym(token.value, token.span),
+          sexp: new Sexps.Sym(tokens[0].value, tokens[0].span),
           remain: tokens.slice(1),
         }
       }
 
       case "Number": {
-        const value = JSON.parse(token.value)
+        const value = JSON.parse(tokens[0].value)
         if (typeof value !== "number") {
           throw new InternalError(
             `I expect value to be a JSON number: ${value}`
@@ -45,13 +50,13 @@ export class Parsing {
         }
 
         return {
-          sexp: new Sexps.Num(value, token.span),
+          sexp: new Sexps.Num(value, tokens[0].span),
           remain: tokens.slice(1),
         }
       }
 
       case "String": {
-        const value = JSON.parse(token.value)
+        const value = JSON.parse(tokens[0].value)
         if (typeof value !== "string") {
           throw new InternalError(
             `I expect value to be a JSON string: ${value}`
@@ -59,35 +64,35 @@ export class Parsing {
         }
 
         return {
-          sexp: new Sexps.Str(value, token.span),
+          sexp: new Sexps.Str(value, tokens[0].span),
           remain: tokens.slice(1),
         }
       }
 
       case "ParenthesisStart": {
         return this.parseList(
-          token,
+          tokens[0],
           tokens.slice(1),
-          new Sexps.Null(token.span)
+          new Sexps.Null(tokens[0].span)
         )
       }
 
       case "ParenthesisEnd": {
-        throw new ParsingError(`I found extra ParenthesisEnd`, token.span)
+        throw new ParsingError(`I found extra ParenthesisEnd`, tokens[0].span)
       }
 
       case "Quote": {
         const { sexp, remain } = this.parse(tokens.slice(1))
 
         const first = new Sexps.Sym(
-          this.parser.config.findQuoteSymbolOrFail(token.value),
-          token.span
+          this.parser.config.findQuoteSymbolOrFail(tokens[0].value),
+          tokens[0].span
         )
 
         const second = new Sexps.Cons(
           sexp,
-          new Sexps.Null(token.span),
-          token.span.union(sexp.span)
+          new Sexps.Null(tokens[0].span),
+          tokens[0].span.union(sexp.span)
         )
 
         return {
@@ -110,8 +115,15 @@ export class Parsing {
     if (tokens[0].kind === "Symbol" && tokens[0].value === ".") {
       const { sexp, remain } = this.parse(tokens.slice(1))
 
+      if (remain[0] === undefined) {
+        throw new ParsingError(`Missing ParenthesisEnd`, start.span)
+      }
+
       if (!this.parser.config.matchParentheses(start.value, remain[0].value)) {
-        throw new ParsingError(`I expect a matching ParenthesisEnd`, start.span)
+        throw new ParsingError(
+          `I expect a matching ParenthesisEnd`,
+          remain[0].span
+        )
       }
 
       return { sexp, remain: remain.slice(1) }
@@ -119,7 +131,10 @@ export class Parsing {
 
     if (tokens[0].kind === "ParenthesisEnd") {
       if (!this.parser.config.matchParentheses(start.value, tokens[0].value)) {
-        throw new ParsingError(`I expect a matching ParenthesisEnd`, start.span)
+        throw new ParsingError(
+          `I expect a matching ParenthesisEnd`,
+          tokens[0].span
+        )
       }
 
       list.span = tokens[0].span

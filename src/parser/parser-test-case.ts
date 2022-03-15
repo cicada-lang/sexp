@@ -1,3 +1,4 @@
+import { ParsingError } from "../errors"
 import { TestCase } from "../infra/test-case"
 import { Lexer } from "../lexer"
 import { Parser } from "../parser"
@@ -25,8 +26,17 @@ export class ParserTestCase extends TestCase {
   })
 
   assertSexp(text: string, exp: PatternExp): Record<string, Sexp> {
-    const sexp = this.parser.parse(text)
-    const pattern = evaluatePatternExp(exp)
-    return pattern.matchOrFail(sexp, {})
+    try {
+      const sexp = this.parser.parse(text)
+      const pattern = evaluatePatternExp(exp)
+      return pattern.matchOrFail(sexp, {})
+    } catch (error) {
+      if (error instanceof ParsingError) {
+        const report = error.span.report(text)
+        console.log(report)
+      }
+
+      throw error
+    }
   }
 }

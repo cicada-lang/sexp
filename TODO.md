@@ -1,5 +1,3 @@
-- `ParsingError` -- report error in `context`
-
 # docs
 
 - docs in readme
