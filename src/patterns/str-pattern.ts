@@ -1,7 +1,7 @@
+import { MatchingError } from "../errors"
 import { Pattern } from "../pattern"
 import { Sexp } from "../sexp"
 import * as Sexps from "../sexps"
-import { MatchingError } from "../errors"
 
 export class StrPattern extends Pattern {
   constructor(public value: string) {

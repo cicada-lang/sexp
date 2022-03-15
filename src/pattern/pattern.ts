@@ -1,5 +1,5 @@
-import { Sexp } from "../sexp"
 import { MatchingError } from "../errors"
+import { Sexp } from "../sexp"
 
 export abstract class Pattern {
   abstract matchOrFail(
