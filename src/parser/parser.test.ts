@@ -2,27 +2,39 @@ import { ParserTestCase } from "./parser-test-case"
 
 export default class extends ParserTestCase {
   ["test symbol"]() {
-    this.assertParse("abc")
+    this.assertSexp("abc", "abc")
   }
 
   ["test string"]() {
-    this.assertParse('"abc"')
+    this.assertSexp(
+      '"abc"'
+      // , str("abc")
+    )
   }
 
   ["test number"]() {
-    this.assertParse("1")
-    this.assertParse("0")
-    this.assertParse("-1")
-    this.assertParse("3.14")
+    this.assertSexp("1", 1)
+    this.assertSexp("0", 0)
+    this.assertSexp("-1", -1)
+    this.assertSexp("3.14", 3.14)
   }
 
   ["test list"]() {
-    this.assertParse("()")
-    this.assertParse("(a b c)")
+    this.assertSexp("()", []),
+      this.assertSexp(
+        "(a b c)"
+        // , Pattern.list(["a", "b", "c"])
+      )
   }
 
   ["test non proper list"]() {
-    this.assertParse("(a . d)")
-    this.assertParse("(a b c . d)")
+    this.assertSexp(
+      "(a . d)"
+      // , Pattern.list(['a'], { end: 'd' })
+    )
+    this.assertSexp(
+      "(a b c . d)"
+      // , Pattern.list(['a', 'b', 'c'], { end: 'd' })
+    )
   }
 }

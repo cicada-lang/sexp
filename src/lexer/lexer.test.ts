@@ -2,47 +2,47 @@ import { LexerTestCase } from "./lexer-test-case"
 
 export default class extends LexerTestCase {
   ["test blank"]() {
-    this.assertLex("", [])
-    this.assertLex("\n", [])
-    this.assertLex(" \n ", [])
-    this.assertLex(" \n \t ", [])
-    this.assertLex("    ", [])
+    this.assertTokens("", [])
+    this.assertTokens("\n", [])
+    this.assertTokens(" \n ", [])
+    this.assertTokens(" \n \t ", [])
+    this.assertTokens("    ", [])
   }
 
   ["test symbol"]() {
-    this.assertLex("a b c", [
+    this.assertTokens("a b c", [
       { kind: "Symbol", value: "a" },
       { kind: "Symbol", value: "b" },
       { kind: "Symbol", value: "c" },
     ])
 
-    this.assertLex("abc", [{ kind: "Symbol", value: "abc" }])
+    this.assertTokens("abc", [{ kind: "Symbol", value: "abc" }])
   }
 
   ["test quotes"]() {
-    this.assertLex("'a", [
+    this.assertTokens("'a", [
       { kind: "Quote", value: "'" },
       { kind: "Symbol", value: "a" },
     ])
 
-    this.assertLex("'  a", [
+    this.assertTokens("'  a", [
       { kind: "Quote", value: "'" },
       { kind: "Symbol", value: "a" },
     ])
   }
 
   ["test parentheses"]() {
-    this.assertLex("()", [
+    this.assertTokens("()", [
       { kind: "ParenthesisStart", value: "(" },
       { kind: "ParenthesisEnd", value: ")" },
     ])
 
-    this.assertLex("( )", [
+    this.assertTokens("( )", [
       { kind: "ParenthesisStart", value: "(" },
       { kind: "ParenthesisEnd", value: ")" },
     ])
 
-    this.assertLex("(a)(b)", [
+    this.assertTokens("(a)(b)", [
       { kind: "ParenthesisStart", value: "(" },
       { kind: "Symbol", value: "a" },
       { kind: "ParenthesisEnd", value: ")" },
@@ -51,7 +51,7 @@ export default class extends LexerTestCase {
       { kind: "ParenthesisEnd", value: ")" },
     ])
 
-    this.assertLex("([{x}])", [
+    this.assertTokens("([{x}])", [
       { kind: "ParenthesisStart", value: "(" },
       { kind: "ParenthesisStart", value: "[" },
       { kind: "ParenthesisStart", value: "{" },
@@ -61,7 +61,7 @@ export default class extends LexerTestCase {
       { kind: "ParenthesisEnd", value: ")" },
     ])
 
-    this.assertLex("(head . tail)", [
+    this.assertTokens("(head . tail)", [
       { kind: "ParenthesisStart", value: "(" },
       { kind: "Symbol", value: "head" },
       { kind: "Symbol", value: "." },
@@ -69,40 +69,40 @@ export default class extends LexerTestCase {
       { kind: "ParenthesisEnd", value: ")" },
     ])
 
-    this.assertLex("abc", [{ kind: "Symbol", value: "abc" }])
+    this.assertTokens("abc", [{ kind: "Symbol", value: "abc" }])
   }
 
   ["test comments"]() {
-    this.assertLex("; abc", [])
-    this.assertLex("; abc\n", [])
-    this.assertLex("; abc\nabc", [{ kind: "Symbol", value: "abc" }])
+    this.assertTokens("; abc", [])
+    this.assertTokens("; abc\n", [])
+    this.assertTokens("; abc\nabc", [{ kind: "Symbol", value: "abc" }])
 
-    this.assertLex("// abc", [])
-    this.assertLex("// abc\n", [])
-    this.assertLex("// abc\nabc", [{ kind: "Symbol", value: "abc" }])
+    this.assertTokens("// abc", [])
+    this.assertTokens("// abc\n", [])
+    this.assertTokens("// abc\nabc", [{ kind: "Symbol", value: "abc" }])
   }
 
   ["test string"]() {
-    this.assertLex('"abc"', [{ kind: "String", value: '"abc"' }])
+    this.assertTokens('"abc"', [{ kind: "String", value: '"abc"' }])
 
-    this.assertLex('"abc" "abc"', [
+    this.assertTokens('"abc" "abc"', [
       { kind: "String", value: '"abc"' },
       { kind: "String", value: '"abc"' },
     ])
 
-    this.assertLex('"abc""abc"', [
+    this.assertTokens('"abc""abc"', [
       { kind: "String", value: '"abc"' },
       { kind: "String", value: '"abc"' },
     ])
 
-    this.assertLex('"//"', [{ kind: "String", value: '"//"' }])
+    this.assertTokens('"//"', [{ kind: "String", value: '"//"' }])
   }
 
   ["test number"]() {
-    this.assertLex("1", [{ kind: "Number", value: "1" }])
-    this.assertLex("-1", [{ kind: "Number", value: "-1" }])
+    this.assertTokens("1", [{ kind: "Number", value: "1" }])
+    this.assertTokens("-1", [{ kind: "Number", value: "-1" }])
 
-    this.assertLex("3.14 3.14", [
+    this.assertTokens("3.14 3.14", [
       { kind: "Number", value: "3.14" },
       { kind: "Number", value: "3.14" },
     ])

@@ -18,7 +18,7 @@ export class LexerTestCase extends TestCase {
     nulls: ["null"],
   })
 
-  assertLex(text: string, tokens: Array<Omit<Token, "span">>): void {
+  assertTokens(text: string, tokens: Array<Omit<Token, "span">>): void {
     const results = this.lexer
       .lex(text)
       .map(({ kind, value }) => ({ kind, value }))

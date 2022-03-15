@@ -22,7 +22,7 @@ export class ParserTestCase extends TestCase {
     lexer: this.lexer,
   })
 
-  assertParse(text: string): void {
+  assertSexp(text: string, x?: any): void {
     const sexp = this.parser.parse(text)
 
     console.dir(sexp, { depth: null })

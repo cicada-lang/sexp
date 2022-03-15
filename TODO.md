@@ -1,8 +1,9 @@
-- `Parsing` setup test workflow
+- `Parsing` setup test workflow -- with help of `Pattern`
 - `Parsing` test quotes
 
 - `Matcher.match<A>(sexp: Sexp): A` -- composable
-  - API for shallow embedding -- use `SymbolArray` -- handle cons
+
+  - API for shallow embedding -- use `Pattern`
 
 - `ParsingError` -- report error in `context`
 
