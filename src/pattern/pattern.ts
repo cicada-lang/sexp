@@ -1,3 +1,4 @@
+import { PatternExp } from "../pattern"
 import { Sexp } from "../sexp"
 
 export class PatternMatchResult {}
@@ -6,6 +7,10 @@ export abstract class Pattern {
   abstract match(sexp: Sexp): PatternMatchResult
 
   test(sexp: Sexp): boolean {
+    throw new Error()
+  }
+
+  static evaluate(exp: PatternExp): Pattern {
     throw new Error()
   }
 }

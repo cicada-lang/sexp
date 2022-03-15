@@ -1,4 +1,5 @@
 import { TestCase } from "../infra/test-case"
+import { Pattern, PatternExp } from "../pattern"
 import { Lexer } from "../lexer"
 import { Parser } from "../parser"
 
@@ -22,7 +23,8 @@ export class ParserTestCase extends TestCase {
     lexer: this.lexer,
   })
 
-  assertSexp(text: string, x?: any): void {
+  assertSexp(text: string, exp?: any ): void {
+
     const sexp = this.parser.parse(text)
 
     console.dir(sexp, { depth: null })

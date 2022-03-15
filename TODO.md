@@ -1,4 +1,7 @@
-- `Parsing` setup test workflow -- with help of `Pattern`
+- `Parsing` setup test workflow -- with help of `PatternExp`
+
+- `Pattern.evaluate(exp: PatternExp)`
+
 - `Parsing` test quotes
 
 - `Matcher.match<A>(sexp: Sexp): A` -- composable
