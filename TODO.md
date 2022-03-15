@@ -1,7 +1,10 @@
-- `Pattern.evaluate(exp: PatternExp)`
-- `Pattern.assert(sexp: Sexp)`
+- `evaluatePatternExp`
+- `Pattern.matchOrFail(sexp: Sexp)`
+
 
 - `Parsing` test quotes
+
+- `VariablePattern`
 
 - `Pattern.match(sexp: Sexp): PatternMatchResults`
 

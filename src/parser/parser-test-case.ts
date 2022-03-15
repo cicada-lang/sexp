@@ -1,7 +1,7 @@
 import { TestCase } from "../infra/test-case"
 import { Lexer } from "../lexer"
 import { Parser } from "../parser"
-import { PatternExp } from "../pattern"
+import { PatternExp, evaluatePatternExp } from "../pattern"
 
 export class ParserTestCase extends TestCase {
   lexer = new Lexer({
@@ -25,9 +25,6 @@ export class ParserTestCase extends TestCase {
 
   assertSexp(text: string, exp: PatternExp): void {
     const sexp = this.parser.parse(text)
-    console.dir(sexp, { depth: null })
-
-    // const pattern = Pattern.evaluate(exp)
-    // pattern.assert(sexp)
+    evaluatePatternExp(exp).matchOrFail(sexp)
   }
 }

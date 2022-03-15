@@ -1,36 +1,43 @@
-import { PatternExp } from "../pattern"
 import { Sexp } from "../sexp"
 
-export class PatternMatchResult {}
-
 export abstract class Pattern {
-  abstract match(sexp: Sexp): PatternMatchResult
+  abstract matchOrFail(sexp: Sexp): Record<string, Sexp>
 
-  test(sexp: Sexp): boolean {
+  match(sexp: Sexp): Record<string, Sexp> | undefined {
+    try {
+      return this.matchOrFail(sexp)
+    } catch (_error) {
+      return undefined
+    }
+  }
+}
+
+export class SymbolPattern extends Pattern {
+  matchOrFail(sexp: Sexp): Record<string, Sexp> {
     throw new Error()
   }
+}
 
-  static evaluate(exp: PatternExp): Pattern {
+export class NumberPattern extends Pattern {
+  matchOrFail(sexp: Sexp): Record<string, Sexp> {
     throw new Error()
   }
 }
 
-export class SymbolPattern {
-  //
+export class StringPattern extends Pattern {
+  matchOrFail(sexp: Sexp): Record<string, Sexp> {
+    throw new Error()
+  }
 }
 
-export class NumberPattern {
-  //
+export class ConsPattern extends Pattern {
+  matchOrFail(sexp: Sexp): Record<string, Sexp> {
+    throw new Error()
+  }
 }
 
-export class StringPattern {
-  //
-}
-
-export class ConsPattern {
-  //
-}
-
-export class NullPattern {
-  //
+export class NullPattern extends Pattern {
+  matchOrFail(sexp: Sexp): Record<string, Sexp> {
+    throw new Error()
+  }
 }
