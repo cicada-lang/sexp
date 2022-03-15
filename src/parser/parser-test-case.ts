@@ -2,7 +2,7 @@ import { ParsingError } from "../errors"
 import { TestCase } from "../infra/test-case"
 import { Lexer } from "../lexer"
 import { Parser } from "../parser"
-import { evaluatePatternExp, PatternExp } from "../pattern"
+import { PatternExp } from "../pattern"
 import { Sexp } from "../sexp"
 
 export class ParserTestCase extends TestCase {
@@ -37,11 +37,7 @@ export class ParserTestCase extends TestCase {
         )
       }
 
-      return sexps.map((sexp, i) => {
-        const exp = exps[i]
-        const pattern = evaluatePatternExp(exp)
-        return pattern.matchOrFail(sexp, {})
-      })
+      return sexps.map((sexp, i) => sexp.matchOrFail(exps[i]))
     } catch (error) {
       if (error instanceof ParsingError) {
         const report = error.span.report(text)
@@ -55,8 +51,7 @@ export class ParserTestCase extends TestCase {
   assertSexp(text: string, exp: PatternExp): Record<string, Sexp> {
     try {
       const sexp = this.parser.parse(text)
-      const pattern = evaluatePatternExp(exp)
-      return pattern.matchOrFail(sexp, {})
+      return sexp.matchOrFail(exp)
     } catch (error) {
       if (error instanceof ParsingError) {
         const report = error.span.report(text)
