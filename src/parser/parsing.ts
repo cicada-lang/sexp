@@ -122,11 +122,7 @@ export class Parsing {
     const result = this.parseList(startToken, remain, ending)
 
     return {
-      list: new Cons(
-        sexp,
-        result.list,
-        sexp.span.union(result.list.span)
-      ),
+      list: new Cons(sexp, result.list, sexp.span.union(result.list.span)),
       remain: result.remain,
     }
   }
