@@ -1,10 +1,11 @@
+import { ParsingError } from "../errors"
 import { PatternExp } from "../pattern-exp"
 import { Sexp } from "../sexp"
 import * as Sexps from "../sexps"
 
 export function matchSymbol(sexp: Sexp): string {
   if (!(sexp instanceof Sexps.Sym)) {
-    throw new Error(`I expect the sexp to be a symbol.`)
+    throw new ParsingError(`I expect the sexp to be a symbol.`, sexp.span)
   }
 
   return sexp.value
@@ -12,7 +13,7 @@ export function matchSymbol(sexp: Sexp): string {
 
 export function matchString(sexp: Sexp): string {
   if (!(sexp instanceof Sexps.Str)) {
-    throw new Error(`I expect the sexp to be a string.`)
+    throw new ParsingError(`I expect the sexp to be a string.`, sexp.span)
   }
 
   return sexp.value
@@ -20,7 +21,7 @@ export function matchString(sexp: Sexp): string {
 
 export function matchNumber(sexp: Sexp): number {
   if (!(sexp instanceof Sexps.Num)) {
-    throw new Error(`I expect the sexp to be a number.`)
+    throw new ParsingError(`I expect the sexp to be a number.`, sexp.span)
   }
 
   return sexp.value
@@ -35,7 +36,7 @@ export function matchList<A>(sexp: Sexp, matcher: (sexp: Sexp) => A): Array<A> {
     return [matcher(sexp.head), ...matchList(sexp.tail, matcher)]
   }
 
-  throw new Error(`I expect the sexp to be a list.`)
+  throw new ParsingError(`I expect the sexp to be a list.`, sexp.span)
 }
 
 export function match<A>(
@@ -47,5 +48,5 @@ export function match<A>(
     if (results !== undefined) return f(results)
   }
 
-  throw new Error("Pattern mismatch.")
+  throw new ParsingError("Pattern mismatch.", sexp.span)
 }
