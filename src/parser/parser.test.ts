@@ -20,6 +20,8 @@ export default class extends ParserTestCase {
   ["test list"]() {
     this.assertSexp("()", [])
     this.assertSexp("(a b c)", ["a", "b", "c"])
+    this.assertSexp("[]", [])
+    this.assertSexp("[a b c]", ["a", "b", "c"])
   }
 
   ["test null"]() {
