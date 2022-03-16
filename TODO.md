@@ -2,9 +2,6 @@
 
 - docs in readme
 
-  - note that we do not need special API for matcher,
-    just use functions -- `matcher<A>(sexp: Sexp): A`
-
 # use sexp
 
 - [use sexp] untyped lambda calculus
