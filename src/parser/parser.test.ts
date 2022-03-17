@@ -4,6 +4,7 @@ import { ParserTestCase } from "./parser-test-case"
 export default class extends ParserTestCase {
   ["test symbol"]() {
     this.assertSexp("abc", "abc")
+    this.assertSexp("3-sphere", "3-sphere")
   }
 
   ["test string"]() {

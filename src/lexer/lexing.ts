@@ -226,7 +226,10 @@ class NumberHandler extends CharHandler {
       if (
         result !== undefined &&
         text[index - 1] !== undefined &&
-        text[index - 1].trim() !== ""
+        text[index - 1].trim() !== "" &&
+        (text[index] === undefined ||
+          text[index].trim() === "" ||
+          this.lexer.config.isMark(text[index]))
       ) {
         lastSuccessAt = index
       }

@@ -17,6 +17,8 @@ export default class extends LexerTestCase {
     ])
 
     this.assertTokens("abc", [{ kind: "Symbol", value: "abc" }])
+
+    this.assertTokens("3-sphere", [{ kind: "Symbol", value: "3-sphere" }])
   }
 
   ["test quotes"]() {

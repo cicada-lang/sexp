@@ -29,6 +29,10 @@ export class ParserConfig {
     return this.nulls.some((x) => x === value)
   }
 
+  isMark(value: string): boolean {
+    return this.marks.some((x) => x === value)
+  }
+
   matchParentheses(start: string, end: string): boolean {
     const found = this.parentheses.find((entry) => entry.start === start)
     if (found === undefined) {
