@@ -1,4 +1,4 @@
-import { Position } from "../token"
+import { Position } from "../position"
 import { color, ColorMode } from "../utilities/color"
 import { intervalOverlap } from "../utilities/interval"
 import { isBrowser } from "../utilities/is-browser"

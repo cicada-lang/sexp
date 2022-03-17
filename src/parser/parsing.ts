@@ -1,8 +1,10 @@
 import { InternalError, ParsingError } from "../errors"
 import { Parser } from "../parser"
+import { Position } from "../position"
 import { Sexp } from "../sexp"
 import * as Sexps from "../sexps"
-import { Position, Span, Token } from "../token"
+import { Span } from "../span"
+import { Token } from "../token"
 
 type Result = { sexp: Sexp; remain: Array<Token> }
 

@@ -1,5 +1,5 @@
 import { evaluate, PatternExp } from "../pattern-exp"
-import { Span } from "../token"
+import { Span } from "../span"
 
 export abstract class Sexp {
   abstract span: Span
