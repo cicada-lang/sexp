@@ -13,12 +13,13 @@ export class NumPattern extends Pattern {
     results: Record<string, Sexp> = {}
   ): Record<string, Sexp> {
     if (!(sexp instanceof Sexps.Num)) {
-      throw new MatchingError(`I expect the sexp to be a number`)
+      throw new MatchingError(`I expect the sexp to be a number`, sexp.span)
     }
 
     if (!(sexp.value === this.value)) {
       throw new MatchingError(
-        `I expect the sexp to be equal to ${this.value}, but it is ${sexp.value}`
+        `I expect the sexp to be equal to ${this.value}, but it is ${sexp.value}`,
+        sexp.span
       )
     }
 

@@ -1,5 +1,3 @@
-- MatchingError extends ParsingError
-
 # docs
 
 - docs in readme

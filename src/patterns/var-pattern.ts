@@ -16,7 +16,8 @@ export class VarPattern extends Pattern {
     if (found !== undefined) {
       if (!equal(found, sexp)) {
         throw new MatchingError(
-          `I expect the sexp to be equal to ${found}, but it is ${sexp}`
+          `I expect the sexp to be equal to ${found}, but it is ${sexp}`,
+          sexp.span
         )
       }
 
