@@ -5,7 +5,7 @@ import { PatternExp } from "../pattern-exp"
 import { Sexp } from "../sexp"
 
 export class ParserTestCase extends TestCase {
-  parser = Parser.create({
+  parser = new Parser({
     quotes: [
       { mark: "'", symbol: "quote" },
       { mark: ",", symbol: "unquote" },

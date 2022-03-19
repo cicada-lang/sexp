@@ -9,14 +9,9 @@ export class Parser {
   lexer: Lexer
   config: ParserConfig
 
-  constructor(options: { lexer: Lexer }) {
-    this.lexer = options.lexer
+  constructor(public options: ParserOptions) {
+    this.lexer = new Lexer(options)
     this.config = this.lexer.config
-  }
-
-  static create(config: ParserOptions): Parser {
-    const lexer = new Lexer(config)
-    return new Parser({ lexer })
   }
 
   parse(text: string): Sexp {
@@ -45,7 +40,7 @@ export class Parser {
     return sexps
   }
 
-  private parseTokens(tokens: Array<Token>): {
+  protected parseTokens(tokens: Array<Token>): {
     sexp: Sexp
     remain: Array<Token>
   } {
