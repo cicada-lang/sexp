@@ -14,9 +14,9 @@ export class Parser {
     this.config = this.lexer.config
   }
 
-  parse(text: string): Sexp {
+  parseSexp(text: string): Sexp {
     const tokens = this.lexer.lex(text)
-    const { sexp, remain } = this.parseTokens(tokens)
+    const { sexp, remain } = this.parseSexpFromTokens(tokens)
     if (remain.length !== 0) {
       throw new ParsingError(
         `I expect to consume all the tokens, but there are ${remain.length} tokens remain.`,
@@ -27,11 +27,11 @@ export class Parser {
     return sexp
   }
 
-  parseMany(text: string): Array<Sexp> {
+  parseSexps(text: string): Array<Sexp> {
     const sexps: Array<Sexp> = []
     let tokens = this.lexer.lex(text)
     while (tokens.length > 0) {
-      const { sexp, remain } = this.parseTokens(tokens)
+      const { sexp, remain } = this.parseSexpFromTokens(tokens)
       sexps.push(sexp)
       if (remain.length === 0) return sexps
       tokens = remain
@@ -40,7 +40,7 @@ export class Parser {
     return sexps
   }
 
-  protected parseTokens(tokens: Array<Token>): {
+  protected parseSexpFromTokens(tokens: Array<Token>): {
     sexp: Sexp
     remain: Array<Token>
   } {

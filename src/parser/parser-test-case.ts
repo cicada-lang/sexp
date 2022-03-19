@@ -24,7 +24,7 @@ export class ParserTestCase extends TestCase {
     exps: Array<PatternExp>
   ): Array<Record<string, Sexp>> {
     try {
-      const sexps = this.parser.parseMany(text)
+      const sexps = this.parser.parseSexps(text)
       if (sexps.length !== exps.length) {
         throw new Error(
           `Length mismatch, sexps: ${sexps.length}, exps: ${exps.length}`
@@ -44,7 +44,7 @@ export class ParserTestCase extends TestCase {
 
   assertSexp(text: string, exp: PatternExp): Record<string, Sexp> {
     try {
-      const sexp = this.parser.parse(text)
+      const sexp = this.parser.parseSexp(text)
       return sexp.matchOrFail(exp)
     } catch (error) {
       if (error instanceof ParsingError) {
