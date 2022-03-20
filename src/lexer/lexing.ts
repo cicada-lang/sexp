@@ -169,7 +169,7 @@ class StringHandler extends CharHandler {
   }
 
   handle(char: string): string {
-    const text = this.lexing.rest
+    const text = this.lexing.rest.split("\n")[0] || ""
     let index = 2 // NOTE over first `"` and the folloing char.
     while (index <= text.length) {
       const head = text.slice(0, index)
@@ -202,12 +202,12 @@ class NumberHandler extends CharHandler {
   kind = "Number" as const
 
   canHandle(char: string): boolean {
-    const text = this.lexing.rest
+    const text = this.lexing.rest.split("\n")[0] || ""
     return this.lastSuccessAt(text) !== undefined
   }
 
   handle(char: string): string {
-    const text = this.lexing.rest
+    const text = this.lexing.rest.split("\n")[0] || ""
     const index = this.lastSuccessAt(text)
     if (index === undefined) {
       throw new InternalError(`Expect to find lastSuccessAt in text: ${text}`)
