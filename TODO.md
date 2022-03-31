@@ -1,6 +1,8 @@
+- extract `xieyuheng/test-case` to project
+
 # docs
 
-- docs in readme
+- docs in README.md
 
 # use sexp
 

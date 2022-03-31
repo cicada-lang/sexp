@@ -1,7 +1,7 @@
 import Path from "path"
 import readdirp from "readdirp"
 import { TestCase } from "../infra/test-case"
-import { test } from "../utilities/test"
+import { test } from "../ut/test"
 
 const ROOT = Path.resolve(__dirname, "..")
 

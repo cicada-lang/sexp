@@ -1,4 +1,4 @@
-import { assertEquals, assertNotEquals } from "../../utilities/assertions"
+import { assertEquals, assertNotEquals } from "../../ut/assertions"
 
 export class TestCase {
   assertEquals = assertEquals
