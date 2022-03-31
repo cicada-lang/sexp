@@ -2,41 +2,41 @@ import { cons, list, str, v } from "../pattern-exp"
 import { ParserTestCase } from "./parser-test-case"
 
 export default class extends ParserTestCase {
-  ["test symbol"]() {
+  "test symbol"() {
     this.assertSexp("abc", "abc")
     this.assertSexp("3-sphere", "3-sphere")
   }
 
-  ["test string"]() {
+  "test string"() {
     this.assertSexp('"abc"', str("abc"))
   }
 
-  ["test number"]() {
+  "test number"() {
     this.assertSexp("1", 1)
     this.assertSexp("0", 0)
     this.assertSexp("-1", -1)
     this.assertSexp("3.14", 3.14)
   }
 
-  ["test list"]() {
+  "test list"() {
     this.assertSexp("()", [])
     this.assertSexp("(a b c)", ["a", "b", "c"])
     this.assertSexp("[]", [])
     this.assertSexp("[a b c]", ["a", "b", "c"])
   }
 
-  ["test null"]() {
+  "test null"() {
     this.assertSexp("null", [])
     this.assertSexp("nil", [])
   }
 
-  ["test non proper list"]() {
+  "test non proper list"() {
     this.assertSexp("(a . d)", cons("a", "d"))
     this.assertSexp("(a . d)", list(["a"], "d"))
     this.assertSexp("(a b c . d)", list(["a", "b", "c"], "d"))
   }
 
-  ["test quotes"]() {
+  "test quotes"() {
     this.assertSexp("'a", ["quote", "a"])
     this.assertSexp("'(a)", ["quote", ["a"]])
     this.assertSexp("'(a b c)", ["quote", ["a", "b", "c"]])
@@ -44,12 +44,12 @@ export default class extends ParserTestCase {
     this.assertSexp("`(a ,b c)", ["quasiquote", ["a", ["unquote", "b"], "c"]])
   }
 
-  ["test variable in pattern"]() {
+  "test variable in pattern"() {
     const results = this.assertSexp("(a b c)", ["a", v("x"), "c"])
     this.assertEquals((results["x"] as any).value, "b")
   }
 
-  ["test many sexps"]() {
+  "test many sexps"() {
     const results = this.assertSexps(
       [
         //

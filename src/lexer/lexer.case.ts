@@ -1,7 +1,7 @@
 import { LexerTestCase } from "./lexer-test-case"
 
 export default class extends LexerTestCase {
-  ["test blank"]() {
+  "test blank"() {
     this.assertTokens("", [])
     this.assertTokens("\n", [])
     this.assertTokens(" \n ", [])
@@ -9,7 +9,7 @@ export default class extends LexerTestCase {
     this.assertTokens("    ", [])
   }
 
-  ["test symbol"]() {
+  "test symbol"() {
     this.assertTokens("a b c", [
       { kind: "Symbol", value: "a" },
       { kind: "Symbol", value: "b" },
@@ -21,7 +21,7 @@ export default class extends LexerTestCase {
     this.assertTokens("3-sphere", [{ kind: "Symbol", value: "3-sphere" }])
   }
 
-  ["test quotes"]() {
+  "test quotes"() {
     this.assertTokens("'a", [
       { kind: "Quote", value: "'" },
       { kind: "Symbol", value: "a" },
@@ -33,7 +33,7 @@ export default class extends LexerTestCase {
     ])
   }
 
-  ["test parentheses"]() {
+  "test parentheses"() {
     this.assertTokens("()", [
       { kind: "ParenthesisStart", value: "(" },
       { kind: "ParenthesisEnd", value: ")" },
@@ -74,7 +74,7 @@ export default class extends LexerTestCase {
     this.assertTokens("abc", [{ kind: "Symbol", value: "abc" }])
   }
 
-  ["test comments"]() {
+  "test comments"() {
     this.assertTokens("; abc", [])
     this.assertTokens("; abc\n", [])
     this.assertTokens("; abc\nabc", [{ kind: "Symbol", value: "abc" }])
@@ -84,7 +84,7 @@ export default class extends LexerTestCase {
     this.assertTokens("// abc\nabc", [{ kind: "Symbol", value: "abc" }])
   }
 
-  ["test string"]() {
+  "test string"() {
     this.assertTokens('"abc"', [{ kind: "String", value: '"abc"' }])
 
     this.assertTokens('"abc" "abc"', [
@@ -100,7 +100,7 @@ export default class extends LexerTestCase {
     this.assertTokens('"//"', [{ kind: "String", value: '"//"' }])
   }
 
-  ["test number"]() {
+  "test number"() {
     this.assertTokens("1", [{ kind: "Number", value: "1" }])
     this.assertTokens("-1", [{ kind: "Number", value: "-1" }])
 
