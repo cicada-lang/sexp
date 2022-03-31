@@ -28,7 +28,7 @@
   "dependencies": {
     "@enchanterjs/enchanter": "^0.1.41",
     "@hpcc-js/wasm": "^1.13.0",
-    "@xieyuheng/test-case": "^0.0.9",
+    "@xieyuheng/test-case": "^0.0.10",
     "@xieyuheng/ty": "^0.1.12",
     "axios": "^0.26.1",
     "fast-deep-equal": "^3.1.3",
