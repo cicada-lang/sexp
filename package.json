@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test:test-case": "enchanter test 'test-case run' 'lib/**/*.test.js'",
+    "test:test-case": "enchanter test 'test-case run' 'lib/**/*.case.js'",
     "test:js": "enchanter test node 'lib/**/*.test.js'",
     "test": "npm-run-all test:*",
     "format": "prettier src docs --write"
