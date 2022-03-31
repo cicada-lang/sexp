@@ -1,5 +1,3 @@
-- extract `xieyuheng/test-case` to project
-
 # docs
 
 - docs in README.md

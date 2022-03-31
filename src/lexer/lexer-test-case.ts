@@ -1,4 +1,4 @@
-import { TestCase } from "../infra/test-case"
+import { TestCase } from "@xieyuheng/test-case"
 import { Lexer } from "../lexer"
 import { Token } from "../token"
 

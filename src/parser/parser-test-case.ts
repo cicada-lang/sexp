@@ -1,5 +1,5 @@
+import { TestCase } from "@xieyuheng/test-case"
 import { ParsingError } from "../errors"
-import { TestCase } from "../infra/test-case"
 import { Parser } from "../parser"
 import { PatternExp } from "../pattern-exp"
 import { Sexp } from "../sexp"

@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
+    "test:test-case": "enchanter test 'run-test-case' 'lib/**/*.test.js'",
     "test:js": "enchanter test node 'lib/**/*.test.js'",
     "test": "npm-run-all test:*",
     "format": "prettier src docs --write"
@@ -27,6 +28,7 @@
   "dependencies": {
     "@enchanterjs/enchanter": "^0.1.41",
     "@hpcc-js/wasm": "^1.13.0",
+    "@xieyuheng/test-case": "^0.0.4",
     "@xieyuheng/ty": "^0.1.12",
     "axios": "^0.26.1",
     "fast-deep-equal": "^3.1.3",
