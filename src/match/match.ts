@@ -39,11 +39,10 @@ export function matchList<A>(sexp: Sexp, matcher: (sexp: Sexp) => A): Array<A> {
   throw new ParsingError(`I expect the sexp to be a list.`, sexp.span)
 }
 
-export function match<A>(
-  sexp: Sexp,
-  entries: Array<[PatternExp, (results: Record<string, Sexp>) => A]>
-): A {
-  for (const [pattern, f] of entries) {
+export type Rule<A> = [PatternExp, (results: Record<string, Sexp>) => A]
+
+export function match<A>(sexp: Sexp, rules: Array<Rule<A>>): A {
+  for (const [pattern, f] of rules) {
     const results = sexp.match(pattern)
     if (results !== undefined) return f(results)
   }
