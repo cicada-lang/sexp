@@ -1,6 +1,7 @@
 import { ParsingError } from "../errors"
 import { PatternExp } from "../pattern-exp"
 import { Sexp } from "../sexp"
+import { Span } from "../span"
 import * as Sexps from "../sexps"
 
 export function matchSymbol(sexp: Sexp): string {
@@ -39,12 +40,15 @@ export function matchList<A>(sexp: Sexp, matcher: (sexp: Sexp) => A): Array<A> {
   throw new ParsingError(`I expect the sexp to be a list.`, sexp.span)
 }
 
-export type Rule<A> = [PatternExp, (results: Record<string, Sexp>) => A]
+export type Rule<A> = [
+  PatternExp,
+  (results: Record<string, Sexp>, options: { span: Span }) => A
+]
 
 export function match<A>(sexp: Sexp, rules: Array<Rule<A>>): A {
   for (const [pattern, f] of rules) {
     const results = sexp.match(pattern)
-    if (results !== undefined) return f(results)
+    if (results !== undefined) return f(results, { span: sexp.span })
   }
 
   throw new ParsingError("Pattern mismatch.", sexp.span)
