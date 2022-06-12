@@ -18,12 +18,12 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@types/node": "^17.0.35",
+    "@types/node": "^17.0.42",
     "@xieyuheng/test-runner": "^0.2.5",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
     "prettier-plugin-organize-imports": "^2.3.4",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.3"
   },
   "dependencies": {
     "@xieyuheng/test-case": "^0.0.14",
