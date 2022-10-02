@@ -1,10 +1,3 @@
-# docs
+improve API design
 
-- docs in README.md
-
-# use sexp
-
-- [use sexp] simple record type
-
-  to learn about how to implement equivalence
-  between recursive record and subtyping.
+examples in README.md
