@@ -14,7 +14,35 @@ npm i @cicada-lang/sexp
 
 ## Examples
 
-TODO
+Parsing lambda:
+
+```scheme
+(lambda (<name> ...) <exp>)
+```
+
+Example from from [@cicada-lang/lambda.sexp](https://github.com/cicada-lang/lambda.sexp):
+
+- See [src/lang/parser](https://github.com/cicada-lang/lambda.sexp/tree/master/src/lang/parser) for more complete example.
+
+```typescript
+import { matchList, matchSymbol, Rule, v } from "@cicada-lang/sexp"
+import { Exp } from "../../exp"
+import * as Exps from "../../exps"
+import { matchExp } from "../matchExp"
+
+export function matchFn(): Array<Rule<Exp>> {
+  return [
+    [
+      ["lambda", v("names"), v("exp")],
+      ({ names, exp }) =>
+        matchList(names, matchSymbol).reduceRight(
+          (fn, name) => new Exps.Fn(name, fn),
+          matchExp(exp),
+        ),
+    ],
+  ]
+}
+```
 
 ## Development
 
