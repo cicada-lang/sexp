@@ -20,9 +20,9 @@ Parsing lambda:
 (lambda (<name> ...) <exp>)
 ```
 
-Example from from [@cicada-lang/lambda.sexp](https://github.com/cicada-lang/lambda.sexp):
+Example from from [**@cicada-lang/lambda.sexp**](https://github.com/cicada-lang/lambda.sexp):
 
-- See [src/lang/parser](https://github.com/cicada-lang/lambda.sexp/tree/master/src/lang/parser) for more complete example.
+- See [**src/lang/parser/**](https://github.com/cicada-lang/lambda.sexp/tree/master/src/lang/parser) for more complete example.
 
 ```typescript
 import { matchList, matchSymbol, Rule, v } from "@cicada-lang/sexp"
