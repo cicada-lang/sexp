@@ -3,7 +3,7 @@ import { Pattern } from "../pattern"
 import { Sexp } from "../sexp"
 import * as Sexps from "../sexps"
 
-export class ConsPattern extends Pattern {
+export class Cons extends Pattern {
   constructor(public head: Pattern, public tail: Pattern) {
     super()
   }

@@ -3,8 +3,8 @@ import { Pattern } from "../pattern"
 import { Sexp } from "../sexp"
 import * as Sexps from "../sexps"
 
-export class NumPattern extends Pattern {
-  constructor(public value: number) {
+export class Sym extends Pattern {
+  constructor(public value: string) {
     super()
   }
 
@@ -12,8 +12,8 @@ export class NumPattern extends Pattern {
     sexp: Sexp,
     results: Record<string, Sexp> = {},
   ): Record<string, Sexp> {
-    if (!(sexp instanceof Sexps.Num)) {
-      throw new MatchingError(`I expect the sexp to be a number`, sexp.span)
+    if (!(sexp instanceof Sexps.Sym)) {
+      throw new MatchingError(`I expect the sexp to be a symbol`, sexp.span)
     }
 
     if (!(sexp.value === this.value)) {
