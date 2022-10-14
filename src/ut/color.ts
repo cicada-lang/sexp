@@ -8,7 +8,7 @@ export function color(
     mode: ColorMode
     color?: string
     background?: string
-  }
+  },
 ): string {
   switch (opts.mode) {
     case "escape-code": {

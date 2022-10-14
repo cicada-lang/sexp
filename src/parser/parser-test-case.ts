@@ -21,13 +21,13 @@ export class ParserTestCase extends TestCase {
 
   assertSexps(
     text: string,
-    exps: Array<PatternExp>
+    exps: Array<PatternExp>,
   ): Array<Record<string, Sexp>> {
     try {
       const sexps = this.parser.parseSexps(text)
       if (sexps.length !== exps.length) {
         throw new Error(
-          `Length mismatch, sexps: ${sexps.length}, exps: ${exps.length}`
+          `Length mismatch, sexps: ${sexps.length}, exps: ${exps.length}`,
         )
       }
 

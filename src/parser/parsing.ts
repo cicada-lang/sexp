@@ -17,7 +17,7 @@ export class Parsing {
     if (tokens[0] === undefined) {
       throw new ParsingError(
         "I expect to see a token, but there is no token remain.",
-        new Span(Position.init(), Position.init())
+        new Span(Position.init(), Position.init()),
       )
     }
 
@@ -33,7 +33,7 @@ export class Parsing {
         if (tokens[0].value === ".") {
           throw new ParsingError(
             `I found "." (the dot) at wrong place.`,
-            tokens[0].span
+            tokens[0].span,
           )
         }
 
@@ -47,7 +47,7 @@ export class Parsing {
         const value = JSON.parse(tokens[0].value)
         if (typeof value !== "number") {
           throw new InternalError(
-            `I expect value to be a JSON number: ${value}`
+            `I expect value to be a JSON number: ${value}`,
           )
         }
 
@@ -61,7 +61,7 @@ export class Parsing {
         const value = JSON.parse(tokens[0].value)
         if (typeof value !== "string") {
           throw new InternalError(
-            `I expect value to be a JSON string: ${value}`
+            `I expect value to be a JSON string: ${value}`,
           )
         }
 
@@ -75,7 +75,7 @@ export class Parsing {
         return this.parseList(
           tokens[0],
           tokens.slice(1),
-          new Sexps.Null(tokens[0].span)
+          new Sexps.Null(tokens[0].span),
         )
       }
 
@@ -88,13 +88,13 @@ export class Parsing {
 
         const first = new Sexps.Sym(
           this.parser.config.findQuoteSymbolOrFail(tokens[0].value),
-          tokens[0].span
+          tokens[0].span,
         )
 
         const second = new Sexps.Cons(
           sexp,
           new Sexps.Null(tokens[0].span),
-          tokens[0].span.union(sexp.span)
+          tokens[0].span.union(sexp.span),
         )
 
         return {
@@ -108,7 +108,7 @@ export class Parsing {
   private parseList(
     start: Token,
     tokens: Array<Token>,
-    list: Sexps.List
+    list: Sexps.List,
   ): Result {
     if (tokens[0] === undefined) {
       throw new ParsingError(`Missing ParenthesisEnd`, start.span)
@@ -124,7 +124,7 @@ export class Parsing {
       if (!this.parser.config.matchParentheses(start.value, remain[0].value)) {
         throw new ParsingError(
           `I expect a matching ParenthesisEnd`,
-          remain[0].span
+          remain[0].span,
         )
       }
 
@@ -135,7 +135,7 @@ export class Parsing {
       if (!this.parser.config.matchParentheses(start.value, tokens[0].value)) {
         throw new ParsingError(
           `I expect a matching ParenthesisEnd`,
-          tokens[0].span
+          tokens[0].span,
         )
       }
 

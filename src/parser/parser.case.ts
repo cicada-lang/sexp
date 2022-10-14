@@ -63,7 +63,7 @@ export default class extends ParserTestCase {
         ["a", "b", "c"],
         ["quote", ["a", "b", "c"]],
         list(["a", "b", "c"], "d"),
-      ]
+      ],
     )
   }
 }

@@ -10,14 +10,14 @@ export class VarPattern extends Pattern {
 
   matchOrFail(
     sexp: Sexp,
-    results: Record<string, Sexp> = {}
+    results: Record<string, Sexp> = {},
   ): Record<string, Sexp> {
     const found = results[this.name]
     if (found !== undefined) {
       if (!equal(found, sexp)) {
         throw new MatchingError(
           `I expect the sexp to be equal to ${found}, but it is ${sexp}`,
-          sexp.span
+          sexp.span,
         )
       }
 

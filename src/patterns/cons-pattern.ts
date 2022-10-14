@@ -10,7 +10,7 @@ export class ConsPattern extends Pattern {
 
   matchOrFail(
     sexp: Sexp,
-    results: Record<string, Sexp> = {}
+    results: Record<string, Sexp> = {},
   ): Record<string, Sexp> {
     if (!(sexp instanceof Sexps.Cons)) {
       throw new MatchingError(`I expect the sexp to be a cons`, sexp.span)

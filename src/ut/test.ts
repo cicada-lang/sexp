@@ -2,7 +2,7 @@ import { colors } from "./colors"
 
 export async function test(
   description: string,
-  fn: () => Promise<void>
+  fn: () => Promise<void>,
 ): Promise<void> {
   await fn()
     .then(() => {

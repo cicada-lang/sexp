@@ -20,7 +20,7 @@ export class Parser {
     if (remain.length !== 0) {
       throw new ParsingError(
         `I expect to consume all the tokens, but there are ${remain.length} tokens remain.`,
-        remain[0].span
+        remain[0].span,
       )
     }
 

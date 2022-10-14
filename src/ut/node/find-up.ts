@@ -3,7 +3,7 @@ import Path from "path"
 
 export function findUp(
   file: string,
-  options?: { from?: string }
+  options?: { from?: string },
 ): string | undefined {
   const dir = options?.from || process.cwd()
   return findUpFromDir(file, Path.resolve(dir))

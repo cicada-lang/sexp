@@ -11,11 +11,7 @@
     "test:test-case": "test-runner test 'test-case run' 'lib/**/*.case.js'",
     "test:js": "test-runner test node 'lib/**/*.test.js'",
     "test": "npm-run-all test:*",
-    "format": "prettier src docs --write"
-  },
-  "prettier": {
-    "semi": false,
-    "trailingComma": "es5"
+    "format": "prettier src --write"
   },
   "devDependencies": {
     "@types/node": "^18.8.0",

@@ -1,8 +1,8 @@
 import { ParsingError } from "../errors"
 import { PatternExp } from "../pattern-exp"
 import { Sexp } from "../sexp"
-import { Span } from "../span"
 import * as Sexps from "../sexps"
+import { Span } from "../span"
 
 export function matchSymbol(sexp: Sexp): string {
   if (!(sexp instanceof Sexps.Sym)) {
@@ -42,7 +42,7 @@ export function matchList<A>(sexp: Sexp, matcher: (sexp: Sexp) => A): Array<A> {
 
 export type Rule<A> = [
   PatternExp,
-  (results: Record<string, Sexp>, options: { span: Span }) => A
+  (results: Record<string, Sexp>, options: { span: Span }) => A,
 ]
 
 export function match<A>(sexp: Sexp, rules: Array<Rule<A>>): A {

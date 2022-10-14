@@ -10,7 +10,7 @@ export class SymPattern extends Pattern {
 
   matchOrFail(
     sexp: Sexp,
-    results: Record<string, Sexp> = {}
+    results: Record<string, Sexp> = {},
   ): Record<string, Sexp> {
     if (!(sexp instanceof Sexps.Sym)) {
       throw new MatchingError(`I expect the sexp to be a symbol`, sexp.span)
@@ -19,7 +19,7 @@ export class SymPattern extends Pattern {
     if (!(sexp.value === this.value)) {
       throw new MatchingError(
         `I expect the sexp to be equal to ${this.value}, but it is ${sexp.value}`,
-        sexp.span
+        sexp.span,
       )
     }
 
