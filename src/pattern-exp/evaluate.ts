@@ -1,7 +1,7 @@
 import { InternalError } from "../errors"
 import { Pattern } from "../pattern"
+import { ConsExp, ListExp, PatternExp, StrExp, VarExp } from "../pattern-exp"
 import * as Patterns from "../patterns"
-import { ConsExp, ListExp, PatternExp, StrExp, VarExp } from "./pattern-exp"
 
 export function evaluate(exp: PatternExp): Pattern {
   if (typeof exp === "number") {
