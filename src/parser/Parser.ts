@@ -3,7 +3,7 @@ import { Lexer } from "../lexer"
 import { ParserConfig, ParserOptions } from "../parser"
 import { Sexp } from "../sexp"
 import { Token } from "../token"
-import { Parsing } from "./parsing"
+import { Parsing } from "./Parsing"
 
 export class Parser {
   lexer: Lexer
