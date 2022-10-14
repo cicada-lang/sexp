@@ -1,4 +1,6 @@
+export * from "./errors"
 export * from "./match"
 export * from "./parser"
 export * from "./pattern-exp"
 export * from "./sexp"
+export * from "./span"
