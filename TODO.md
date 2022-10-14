@@ -1,3 +1,5 @@
+use vitest instead of test-case
+
 improve API design
 
-examples in README.md
+examples about lambda calculus in README.md
