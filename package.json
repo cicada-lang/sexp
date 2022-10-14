@@ -1,6 +1,6 @@
 {
   "name": "@cicada-lang/sexp",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "repository": "github:cicada-lang/sexp",
   "main": "./lib/index.js",
   "files": [
