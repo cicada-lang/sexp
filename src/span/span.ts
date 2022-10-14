@@ -1,7 +1,7 @@
 import { Position } from "../position"
-import { color, ColorMode } from "../ut/color"
-import { intervalOverlap } from "../ut/interval"
-import { isBrowser } from "../ut/is-browser"
+import { color, ColorMode } from "../utils/color"
+import { intervalOverlap } from "../utils/interval"
+import { isBrowser } from "../utils/is-browser"
 
 export class Span {
   constructor(public start: Position, public end: Position) {}

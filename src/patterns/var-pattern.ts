@@ -1,7 +1,7 @@
 import { MatchingError } from "../errors"
 import { Pattern } from "../pattern"
 import { Sexp } from "../sexp"
-import { equal } from "../ut/equal"
+import { equal } from "../utils/equal"
 
 export class VarPattern extends Pattern {
   constructor(public name: string) {
