@@ -1,3 +1,3 @@
-import { ParsingError } from "./parsing-error"
+import { ParsingError } from "./ParsingError"
 
 export class MatchingError extends ParsingError {}

@@ -1,3 +1,3 @@
-export * from "./internal-error"
-export * from "./matching-error"
-export * from "./parsing-error"
+export * from "./InternalError"
+export * from "./MatchingError"
+export * from "./ParsingError"
