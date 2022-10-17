@@ -1,7 +1,7 @@
 import { InternalError } from "../errors"
 import * as Patterns from "../pattern"
 import { Pattern } from "../pattern"
-import { ConsExp, ListExp, PatternExp, StrExp, VarExp } from "../pattern-exp"
+import { PatternExp } from "../pattern-exp"
 
 export function evaluate(exp: PatternExp): Pattern {
   if (typeof exp === "number") {
@@ -22,7 +22,7 @@ export function evaluate(exp: PatternExp): Pattern {
     return pattern
   }
 
-  if (exp instanceof ListExp) {
+  if (exp.kind === "ListExp") {
     let pattern = exp.end ? evaluate(exp.end) : Patterns.Null()
 
     for (const head of [...exp.exps].reverse()) {
@@ -32,14 +32,15 @@ export function evaluate(exp: PatternExp): Pattern {
     return pattern
   }
 
-  if (exp instanceof StrExp) {
+  if (exp.kind === "StrExp") {
     return Patterns.Str(exp.value)
   }
-  if (exp instanceof VarExp) {
+
+  if (exp.kind === "VarExp") {
     return Patterns.Var(exp.name)
   }
 
-  if (exp instanceof ConsExp) {
+  if (exp.kind === "ConsExp") {
     return Patterns.Cons(evaluate(exp.head), evaluate(exp.tail))
   }
 

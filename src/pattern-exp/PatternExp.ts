@@ -7,34 +7,62 @@ export type PatternExp =
   | Array<PatternExp>
   | VarExp
 
-export class StrExp {
-  constructor(public value: string) {}
-}
-
-export class ConsExp {
-  constructor(public head: PatternExp, public tail: PatternExp) {}
-}
-
-export class ListExp {
-  constructor(public exps: Array<PatternExp>, public end?: PatternExp) {}
-}
-
-export class VarExp {
-  constructor(public name: string) {}
+export type StrExp = {
+  family: "PatternExp"
+  kind: "StrExp"
+  value: string
 }
 
 export function str(value: string): StrExp {
-  return new StrExp(value)
+  return {
+    family: "PatternExp",
+    kind: "StrExp",
+    value,
+  }
+}
+
+export type ConsExp = {
+  family: "PatternExp"
+  kind: "ConsExp"
+  head: PatternExp
+  tail: PatternExp
 }
 
 export function cons(head: PatternExp, tail: PatternExp): ConsExp {
-  return new ConsExp(head, tail)
+  return {
+    family: "PatternExp",
+    kind: "ConsExp",
+    head,
+    tail,
+  }
 }
 
-export function list(list: Array<PatternExp>, end?: PatternExp): ListExp {
-  return new ListExp(list, end)
+export type ListExp = {
+  family: "PatternExp"
+  kind: "ListExp"
+  exps: Array<PatternExp>
+  end?: PatternExp
+}
+
+export function list(exps: Array<PatternExp>, end?: PatternExp): ListExp {
+  return {
+    family: "PatternExp",
+    kind: "ListExp",
+    exps,
+    end,
+  }
+}
+
+export type VarExp = {
+  family: "PatternExp"
+  kind: "VarExp"
+  name: string
 }
 
 export function v(name: string): VarExp {
-  return new VarExp(name)
+  return {
+    family: "PatternExp",
+    kind: "VarExp",
+    name,
+  }
 }
