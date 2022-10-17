@@ -2,7 +2,7 @@ import { expect, test } from "vitest"
 import { ParsingError } from "../errors"
 import { Parser } from "../parser"
 import { cons, list, PatternExp, str, v } from "../pattern-exp"
-import { Sexp } from "../sexp"
+import { matchSexpOrFail, Sexp } from "../sexp"
 
 const parser = new Parser({
   quotes: [
@@ -30,7 +30,7 @@ function assertSexps(
       )
     }
 
-    return sexps.map((sexp, i) => sexp.matchOrFail(exps[i]))
+    return sexps.map((sexp, i) => matchSexpOrFail(sexp, exps[i]))
   } catch (error) {
     if (error instanceof ParsingError) {
       const report = error.span.report(text)
@@ -44,7 +44,7 @@ function assertSexps(
 function assertSexp(text: string, exp: PatternExp): Record<string, Sexp> {
   try {
     const sexp = parser.parseSexp(text)
-    return sexp.matchOrFail(exp)
+    return matchSexpOrFail(sexp, exp)
   } catch (error) {
     if (error instanceof ParsingError) {
       const report = error.span.report(text)

@@ -1,11 +1,10 @@
 import { ParsingError } from "../errors"
 import { PatternExp } from "../pattern-exp"
-import { Sexp } from "../sexp"
-import * as Sexps from "../sexps"
+import { matchSexp, Sexp } from "../sexp"
 import { Span } from "../span"
 
 export function matchSymbol(sexp: Sexp): string {
-  if (!(sexp instanceof Sexps.Sym)) {
+  if (sexp.kind !== "Sym") {
     throw new ParsingError(`I expect the sexp to be a symbol.`, sexp.span)
   }
 
@@ -13,7 +12,7 @@ export function matchSymbol(sexp: Sexp): string {
 }
 
 export function matchString(sexp: Sexp): string {
-  if (!(sexp instanceof Sexps.Str)) {
+  if (sexp.kind !== "Str") {
     throw new ParsingError(`I expect the sexp to be a string.`, sexp.span)
   }
 
@@ -21,7 +20,7 @@ export function matchString(sexp: Sexp): string {
 }
 
 export function matchNumber(sexp: Sexp): number {
-  if (!(sexp instanceof Sexps.Num)) {
+  if (sexp.kind !== "Num") {
     throw new ParsingError(`I expect the sexp to be a number.`, sexp.span)
   }
 
@@ -29,11 +28,11 @@ export function matchNumber(sexp: Sexp): number {
 }
 
 export function matchList<A>(sexp: Sexp, matcher: (sexp: Sexp) => A): Array<A> {
-  if (sexp instanceof Sexps.Null) {
+  if (sexp.kind === "Null") {
     return []
   }
 
-  if (sexp instanceof Sexps.Cons) {
+  if (sexp.kind === "Cons") {
     return [matcher(sexp.head), ...matchList(sexp.tail, matcher)]
   }
 
@@ -47,7 +46,7 @@ export type Rule<A> = [
 
 export function match<A>(sexp: Sexp, rules: Array<Rule<A>>): A {
   for (const [pattern, f] of rules) {
-    const results = sexp.match(pattern)
+    const results = matchSexp(sexp, pattern)
     if (results !== undefined) return f(results, { span: sexp.span })
   }
 

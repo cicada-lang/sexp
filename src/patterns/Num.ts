@@ -1,7 +1,6 @@
 import { MatchingError } from "../errors"
 import { Pattern } from "../pattern"
 import { Sexp } from "../sexp"
-import * as Sexps from "../sexps"
 
 export class Num extends Pattern {
   constructor(public value: number) {
@@ -12,7 +11,7 @@ export class Num extends Pattern {
     sexp: Sexp,
     results: Record<string, Sexp> = {},
   ): Record<string, Sexp> {
-    if (!(sexp instanceof Sexps.Num)) {
+    if (sexp.kind !== "Num") {
       throw new MatchingError(`I expect the sexp to be a number`, sexp.span)
     }
 

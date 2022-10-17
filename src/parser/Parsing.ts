@@ -1,8 +1,8 @@
 import { InternalError, ParsingError } from "../errors"
 import { Parser } from "../parser"
 import { Position } from "../position"
+import * as Sexps from "../sexp"
 import { Sexp } from "../sexp"
-import * as Sexps from "../sexps"
 import { Span } from "../span"
 import { Token } from "../token"
 
@@ -25,7 +25,7 @@ export class Parsing {
       case "Symbol": {
         if (this.parser.config.isNull(tokens[0].value)) {
           return {
-            sexp: new Sexps.Null(tokens[0].span),
+            sexp: Sexps.Null(tokens[0].span),
             remain: tokens.slice(1),
           }
         }
@@ -38,7 +38,7 @@ export class Parsing {
         }
 
         return {
-          sexp: new Sexps.Sym(tokens[0].value, tokens[0].span),
+          sexp: Sexps.Sym(tokens[0].value, tokens[0].span),
           remain: tokens.slice(1),
         }
       }
@@ -52,7 +52,7 @@ export class Parsing {
         }
 
         return {
-          sexp: new Sexps.Num(value, tokens[0].span),
+          sexp: Sexps.Num(value, tokens[0].span),
           remain: tokens.slice(1),
         }
       }
@@ -66,7 +66,7 @@ export class Parsing {
         }
 
         return {
-          sexp: new Sexps.Str(value, tokens[0].span),
+          sexp: Sexps.Str(value, tokens[0].span),
           remain: tokens.slice(1),
         }
       }
@@ -75,7 +75,7 @@ export class Parsing {
         return this.parseList(
           tokens[0],
           tokens.slice(1),
-          new Sexps.Null(tokens[0].span),
+          Sexps.Null(tokens[0].span),
         )
       }
 
@@ -86,19 +86,19 @@ export class Parsing {
       case "Quote": {
         const { sexp, remain } = this.parse(tokens.slice(1))
 
-        const first = new Sexps.Sym(
+        const first = Sexps.Sym(
           this.parser.config.findQuoteSymbolOrFail(tokens[0].value),
           tokens[0].span,
         )
 
-        const second = new Sexps.Cons(
+        const second = Sexps.Cons(
           sexp,
-          new Sexps.Null(tokens[0].span),
+          Sexps.Null(tokens[0].span),
           tokens[0].span.union(sexp.span),
         )
 
         return {
-          sexp: new Sexps.Cons(first, second, first.span.union(second.span)),
+          sexp: Sexps.Cons(first, second, first.span.union(second.span)),
           remain,
         }
       }
@@ -149,7 +149,7 @@ export class Parsing {
     const { sexp, remain } = this.parseList(start, head.remain, list)
 
     return {
-      sexp: new Sexps.Cons(head.sexp, sexp, head.sexp.span.union(sexp.span)),
+      sexp: Sexps.Cons(head.sexp, sexp, head.sexp.span.union(sexp.span)),
       remain,
     }
   }
