@@ -1,6 +1,5 @@
 // organize-imports-ignore
 
-export * from "./list"
 export * from "./cons"
 export * from "./null"
 export * from "./sym"

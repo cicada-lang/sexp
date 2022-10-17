@@ -108,7 +108,7 @@ export class Parsing {
   private parseList(
     start: Token,
     tokens: Array<Token>,
-    list: Sexps.List,
+    list: Sexps.Cons | Sexps.Null,
   ): Result {
     if (tokens[0] === undefined) {
       throw new ParsingError(`Missing ParenthesisEnd`, start.span)
