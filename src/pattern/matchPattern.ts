@@ -3,7 +3,7 @@ import { Pattern } from "../pattern"
 import { Sexp } from "../sexp"
 import { equal } from "../utils/equal"
 
-export function matchOrFail(
+export function matchPatternOrFail(
   pattern: Pattern,
   sexp: Sexp,
   results: Record<string, Sexp>,
@@ -38,8 +38,8 @@ export function matchOrFail(
         throw new MatchingError(`I expect the sexp to be a cons`, sexp.span)
       }
 
-      results = matchOrFail(pattern.head, sexp.head, results)
-      results = matchOrFail(pattern.tail, sexp.tail, results)
+      results = matchPatternOrFail(pattern.head, sexp.head, results)
+      results = matchPatternOrFail(pattern.tail, sexp.tail, results)
 
       return results
     }
@@ -91,13 +91,13 @@ export function matchOrFail(
   }
 }
 
-export function match(
+export function matchPattern(
   pattern: Pattern,
   sexp: Sexp,
   results: Record<string, Sexp>,
 ): Record<string, Sexp> | undefined {
   try {
-    return matchOrFail(pattern, sexp, results)
+    return matchPatternOrFail(pattern, sexp, results)
   } catch (error) {
     if (error instanceof MatchingError) return undefined
     else throw error
