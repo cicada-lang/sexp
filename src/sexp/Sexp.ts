@@ -1,4 +1,3 @@
-import { evaluate, PatternExp } from "../pattern-exp"
 import { Span } from "../span"
 
 export type Sexp = Cons | Null | Num | Str | Sym
@@ -78,18 +77,4 @@ export function Sym(value: string, span: Span): Sym {
     value,
     span,
   }
-}
-
-export function matchSexp(
-  sexp: Sexp,
-  exp: PatternExp,
-): Record<string, Sexp> | undefined {
-  return evaluate(exp).match(sexp, {})
-}
-
-export function matchSexpOrFail(
-  sexp: Sexp,
-  exp: PatternExp,
-): Record<string, Sexp> {
-  return evaluate(exp).matchOrFail(sexp, {})
 }
