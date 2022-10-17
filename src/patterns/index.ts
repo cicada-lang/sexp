@@ -1,6 +1,0 @@
-export * from "./Cons"
-export * from "./Null"
-export * from "./Num"
-export * from "./Str"
-export * from "./Sym"
-export * from "./Var"

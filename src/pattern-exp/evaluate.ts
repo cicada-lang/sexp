@@ -1,46 +1,46 @@
 import { InternalError } from "../errors"
+import * as Patterns from "../pattern"
 import { Pattern } from "../pattern"
 import { ConsExp, ListExp, PatternExp, StrExp, VarExp } from "../pattern-exp"
-import * as Patterns from "../patterns"
 
 export function evaluate(exp: PatternExp): Pattern {
   if (typeof exp === "number") {
-    return new Patterns.Num(exp)
+    return Patterns.Num(exp)
   }
 
   if (typeof exp === "string") {
-    return new Patterns.Sym(exp)
+    return Patterns.Sym(exp)
   }
 
   if (exp instanceof Array) {
-    let pattern = new Patterns.Null()
+    let pattern: Pattern = Patterns.Null()
 
     for (const head of [...exp].reverse()) {
-      pattern = new Patterns.Cons(evaluate(head), pattern)
+      pattern = Patterns.Cons(evaluate(head), pattern)
     }
 
     return pattern
   }
 
   if (exp instanceof ListExp) {
-    let pattern = exp.end ? evaluate(exp.end) : new Patterns.Null()
+    let pattern = exp.end ? evaluate(exp.end) : Patterns.Null()
 
     for (const head of [...exp.exps].reverse()) {
-      pattern = new Patterns.Cons(evaluate(head), pattern)
+      pattern = Patterns.Cons(evaluate(head), pattern)
     }
 
     return pattern
   }
 
   if (exp instanceof StrExp) {
-    return new Patterns.Str(exp.value)
+    return Patterns.Str(exp.value)
   }
   if (exp instanceof VarExp) {
-    return new Patterns.Var(exp.name)
+    return Patterns.Var(exp.name)
   }
 
   if (exp instanceof ConsExp) {
-    return new Patterns.Cons(evaluate(exp.head), evaluate(exp.tail))
+    return Patterns.Cons(evaluate(exp.head), evaluate(exp.tail))
   }
 
   throw new InternalError(`Unknown pattern exp: ${exp}`)
