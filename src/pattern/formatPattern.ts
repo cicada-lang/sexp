@@ -3,7 +3,7 @@ import { Pattern, unfoldFormatCons } from "../pattern"
 export function formatPattern(pattern: Pattern): string {
   switch (pattern.kind) {
     case "Var": {
-      return `_.${pattern.name}`
+      return `<${pattern.name}>`
     }
 
     case "Cons":
