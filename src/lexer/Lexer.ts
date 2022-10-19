@@ -1,6 +1,6 @@
 import { ParserConfig, ParserOptions } from "../parser"
 import { Token } from "../token"
-import { Lexing } from "./lexing"
+import { Lexing } from "./Lexing"
 
 export class Lexer {
   config: ParserConfig
