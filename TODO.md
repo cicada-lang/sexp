@@ -1,1 +1,1 @@
-PatternExp as closed datatype
+improve sexp parser error message
