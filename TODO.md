@@ -1,1 +1,1 @@
-improve sexp parser error message
+improve sexp parser error message -- with `formatSexp` & `formatPattern`

@@ -1,6 +1,7 @@
 import { ParsingError } from "../errors"
-import { PatternExp } from "../pattern-exp"
-import { matchSexp, Sexp } from "../sexp"
+import { matchPattern } from "../pattern"
+import { evaluate, PatternExp } from "../pattern-exp"
+import { Sexp } from "../sexp"
 import { Span } from "../span"
 
 export function matchSymbol(sexp: Sexp): string {
@@ -46,7 +47,7 @@ export type Rule<A> = [
 
 export function match<A>(sexp: Sexp, rules: Array<Rule<A>>): A {
   for (const [pattern, f] of rules) {
-    const results = matchSexp(sexp, pattern)
+    const results = matchPattern(evaluate(pattern), sexp)
     if (results !== undefined) return f(results, { span: sexp.span })
   }
 
