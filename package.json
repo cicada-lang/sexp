@@ -22,16 +22,16 @@
     "picocolors": "^1.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.7",
-    "husky": "^8.0.1",
+    "@types/node": "^18.11.9",
+    "husky": "^8.0.2",
     "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.1.1",
     "pretty-quick": "^3.1.3",
-    "@vitest/coverage-c8": "^0.24.3",
-    "@vitest/coverage-istanbul": "^0.24.3",
-    "@vitest/ui": "^0.24.3",
-    "vite": "^3.2.1",
-    "vitest": "^0.24.3",
+    "@vitest/coverage-c8": "^0.25.0",
+    "@vitest/coverage-istanbul": "^0.25.0",
+    "@vitest/ui": "^0.25.0",
+    "vite": "^3.2.3",
+    "vitest": "^0.25.0",
     "typescript": "^4.8.4"
   },
   "license": "GPL-3.0-or-later"
