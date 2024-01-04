@@ -1,7 +1,10 @@
-import { Span } from "../span"
+import { Span } from "../span/index.js"
 
 export class ParsingError extends Error {
-  constructor(message: string, public span: Span) {
+  constructor(
+    message: string,
+    public span: Span,
+  ) {
     super(message)
   }
 

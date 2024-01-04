@@ -1,9 +1,10 @@
 import { expect, test } from "vitest"
-import { ParsingError } from "../errors"
-import { Parser } from "../parser"
-import { matchPatternOrFail } from "../pattern"
-import { cons, evaluate, list, PatternExp, str, v } from "../pattern-exp"
-import { Sexp } from "../sexp"
+import { ParsingError } from "../errors/index.js"
+import { Parser } from "../parser/index.js"
+import type { PatternExp } from "../pattern-exp/index.js"
+import { cons, evaluate, list, str, v } from "../pattern-exp/index.js"
+import { matchPatternOrFail } from "../pattern/index.js"
+import type { Sexp } from "../sexp/index.js"
 
 const parser = new Parser({
   quotes: [

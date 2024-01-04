@@ -1,4 +1,4 @@
-import { Span } from "../span"
+import { Span } from "../span/index.js"
 
 export type TokenKind =
   | "Symbol"

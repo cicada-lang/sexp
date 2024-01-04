@@ -1,7 +1,7 @@
-import { InternalError } from "../errors"
-import * as Patterns from "../pattern"
-import { Pattern } from "../pattern"
-import { PatternExp } from "../pattern-exp"
+import { InternalError } from "../errors/index.js"
+import type { PatternExp } from "../pattern-exp/index.js"
+import type { Pattern } from "../pattern/index.js"
+import * as Patterns from "../pattern/index.js"
 
 export function evaluate(exp: PatternExp): Pattern {
   if (typeof exp === "number") {

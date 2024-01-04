@@ -2,6 +2,7 @@
   "name": "@cicada-lang/sexp",
   "version": "0.0.36",
   "repository": "github:cicada-lang/sexp",
+  "type": "module",
   "main": "./lib/index.js",
   "files": [
     "lib"
@@ -9,10 +10,9 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "test:ts": "vitest --dir src --threads false --run",
-    "test:watch": "vitest --dir src --threads false",
-    "test:coverage": "vitest --dir src --threads false --run --coverage ",
-    "test:gui": "vitest --dir src --threads false --ui",
+    "test:ts": "vitest --dir src --run",
+    "test:watch": "vitest --dir src",
+    "test:gui": "vitest --dir src --ui",
     "test": "npm run test:ts",
     "format": "prettier src --write"
   },
@@ -21,15 +21,13 @@
     "picocolors": "^1.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "prettier": "^2.8.0",
-    "prettier-plugin-organize-imports": "^3.2.1",
-    "@vitest/coverage-c8": "^0.25.3",
-    "@vitest/coverage-istanbul": "^0.25.3",
-    "@vitest/ui": "^0.25.3",
-    "vite": "^3.2.4",
-    "vitest": "^0.25.3",
-    "typescript": "^4.9.3"
+    "@types/node": "^20.10.6",
+    "prettier": "^3.1.1",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "@vitest/ui": "^1.1.1",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.1",
+    "typescript": "^5.3.3"
   },
   "license": "GPL-3.0-or-later"
 }

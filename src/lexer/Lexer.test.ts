@@ -1,6 +1,6 @@
 import { expect, test } from "vitest"
-import { Lexer } from "../lexer"
-import { Token } from "../token"
+import { Lexer } from "../lexer/index.js"
+import { Token } from "../token/index.js"
 
 const lexer = new Lexer({
   quotes: [

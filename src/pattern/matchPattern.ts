@@ -1,7 +1,7 @@
-import { ParsingError } from "../errors"
-import { Pattern } from "../pattern"
-import { Sexp } from "../sexp"
-import { equal } from "../utils/equal"
+import { ParsingError } from "../errors/index.js"
+import type { Pattern } from "../pattern/index.js"
+import type { Sexp } from "../sexp/index.js"
+import { equal } from "../utils/equal.js"
 
 export function matchPatternOrFail(
   pattern: Pattern,

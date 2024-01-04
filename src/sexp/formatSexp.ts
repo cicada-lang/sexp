@@ -1,4 +1,5 @@
-import { Sexp, unfoldFormatCons } from "../sexp"
+import type { Sexp } from "../sexp/index.js"
+import { unfoldFormatCons } from "../sexp/index.js"
 
 export function formatSexp(sexp: Sexp): string {
   switch (sexp.kind) {

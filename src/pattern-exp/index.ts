@@ -1,2 +1,2 @@
-export * from "./evaluate"
-export * from "./PatternExp"
+export * from "./PatternExp.js"
+export * from "./evaluate.js"

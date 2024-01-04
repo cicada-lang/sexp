@@ -1,4 +1,5 @@
-import { Pattern, unfoldFormatCons } from "../pattern"
+import type { Pattern } from "../pattern/index.js"
+import { unfoldFormatCons } from "../pattern/index.js"
 
 export function formatPattern(pattern: Pattern): string {
   switch (pattern.kind) {

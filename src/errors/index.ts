@@ -1,2 +1,2 @@
-export * from "./InternalError"
-export * from "./ParsingError"
+export * from "./InternalError.js"
+export * from "./ParsingError.js"

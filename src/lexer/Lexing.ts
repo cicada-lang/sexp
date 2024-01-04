@@ -1,8 +1,9 @@
-import { InternalError, ParsingError } from "../errors"
-import { Lexer } from "../lexer"
-import { Position } from "../position"
-import { Span } from "../span"
-import { Token, TokenKind } from "../token"
+import { InternalError, ParsingError } from "../errors/index.js"
+import { Lexer } from "../lexer/index.js"
+import { Position } from "../position/index.js"
+import { Span } from "../span/index.js"
+import type { TokenKind } from "../token/index.js"
+import { Token } from "../token/index.js"
 
 export class Lexing implements Iterator<Token> {
   position = Position.init()
@@ -20,7 +21,10 @@ export class Lexing implements Iterator<Token> {
     new SymbolHandler(this),
   ]
 
-  constructor(public lexer: Lexer, public text: string) {}
+  constructor(
+    public lexer: Lexer,
+    public text: string,
+  ) {}
 
   [Symbol.iterator](): Iterator<Token> {
     return this

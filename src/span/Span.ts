@@ -1,10 +1,14 @@
-import { Position } from "../position"
-import { color, ColorMode } from "../utils/color"
-import { intervalOverlap } from "../utils/interval"
-import { isBrowser } from "../utils/isBrowser"
+import { Position } from "../position/index.js"
+import type { ColorMode } from "../utils/color.js"
+import { color } from "../utils/color.js"
+import { intervalOverlap } from "../utils/interval.js"
+import { isBrowser } from "../utils/isBrowser.js"
 
 export class Span {
-  constructor(public start: Position, public end: Position) {}
+  constructor(
+    public start: Position,
+    public end: Position,
+  ) {}
 
   get lo(): number {
     return this.start.index
