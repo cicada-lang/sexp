@@ -1,5 +1,4 @@
-import type { ParserOptions } from "../parser/index.js"
-import { ParserConfig } from "../parser/index.js"
+import { ParserConfig, type ParserOptions } from "../parser/index.js"
 import { Token } from "../token/index.js"
 import { Lexing } from "./Lexing.js"
 

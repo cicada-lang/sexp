@@ -1,5 +1,5 @@
 import { ParsingError } from "../errors/index.js"
-import type { Sexp } from "../sexp/index.js"
+import { type Sexp } from "../sexp/index.js"
 import { equal } from "../utils/equal.js"
 
 export type Pattern = Var | Cons | Null | Num | Str | Sym

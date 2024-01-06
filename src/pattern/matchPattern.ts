@@ -1,6 +1,6 @@
 import { ParsingError } from "../errors/index.js"
-import type { Pattern } from "../pattern/index.js"
-import type { Sexp } from "../sexp/index.js"
+import { type Pattern } from "../pattern/index.js"
+import { type Sexp } from "../sexp/index.js"
 import { equal } from "../utils/equal.js"
 
 export function matchPatternOrFail(

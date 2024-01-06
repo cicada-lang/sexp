@@ -1,8 +1,8 @@
 import { InternalError, ParsingError } from "../errors/index.js"
 import { Parser } from "../parser/index.js"
 import { Position } from "../position/index.js"
-import type { Sexp } from "../sexp/index.js"
 import * as Sexps from "../sexp/index.js"
+import { type Sexp } from "../sexp/index.js"
 import { Span } from "../span/index.js"
 import { Token } from "../token/index.js"
 

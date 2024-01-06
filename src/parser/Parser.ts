@@ -1,8 +1,7 @@
 import { ParsingError } from "../errors/index.js"
 import { Lexer } from "../lexer/index.js"
-import type { ParserOptions } from "../parser/index.js"
-import { ParserConfig } from "../parser/index.js"
-import type { Sexp } from "../sexp/index.js"
+import { ParserConfig, type ParserOptions } from "../parser/index.js"
+import { type Sexp } from "../sexp/index.js"
 import { Token } from "../token/index.js"
 import { Parsing } from "./Parsing.js"
 

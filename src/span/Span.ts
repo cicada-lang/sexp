@@ -1,6 +1,5 @@
 import { Position } from "../position/index.js"
-import type { ColorMode } from "../utils/color.js"
-import { color } from "../utils/color.js"
+import { color, type ColorMode } from "../utils/color.js"
 import { intervalOverlap } from "../utils/interval.js"
 import { isBrowser } from "../utils/isBrowser.js"
 
