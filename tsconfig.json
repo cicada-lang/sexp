@@ -3,9 +3,10 @@
   "compilerOptions": {
     "lib": ["esnext", "dom"],
     "module": "node16",
-    "target": "es6",
+    "target": "es2017",
     "strict": true,
     "verbatimModuleSyntax": true,
+    "rewriteRelativeImportExtensions": true,
     "declaration": true,
     "sourceMap": true,
     "declarationMap": true,
