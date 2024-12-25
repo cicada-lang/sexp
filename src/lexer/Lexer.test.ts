@@ -1,4 +1,5 @@
-import { expect, test } from "vitest"
+import assert from "node:assert"
+import { test } from "node:test"
 import { Lexer } from "../lexer/index.ts"
 import { Token } from "../token/index.ts"
 
@@ -19,7 +20,7 @@ const lexer = new Lexer({
 
 function assertTokens(text: string, tokens: Array<Omit<Token, "span">>): void {
   const results = lexer.lex(text).map(({ kind, value }) => ({ kind, value }))
-  expect(results).toEqual(tokens)
+  assert.deepStrictEqual(results, tokens)
 }
 
 test("blank", () => {

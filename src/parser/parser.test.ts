@@ -1,4 +1,5 @@
-import { expect, test } from "vitest"
+import assert from "node:assert"
+import { test } from "node:test"
 import { ParsingError } from "../errors/index.ts"
 import { Parser } from "../parser/index.ts"
 import {
@@ -107,7 +108,7 @@ test("quotes", () => {
 
 test("variable in pattern", () => {
   const results = assertSexp("(a b c)", ["a", v("x"), "c"])
-  expect((results["x"] as any).value).toBe("b")
+  assert.deepStrictEqual((results["x"] as any).value, "b")
 })
 
 test("many sexps", () => {
